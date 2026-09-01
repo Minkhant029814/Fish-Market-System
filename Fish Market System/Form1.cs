@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fish_Market_System.view;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,13 +25,48 @@ namespace Fish_Market_System
 
         private void btnAddnewMarchant_Click(object sender, EventArgs e)
         {
-            addMarchantPanel.Visible = true;
+            if (!addMarchantPanel.Visible)
+            {
+                addMarchantPanel.Visible = true;
+            }
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(txtMarchantName.Text);
+            if (string.IsNullOrWhiteSpace(txtMarchantName.Text))
+            {
+                MessageBox.Show("ကုန်သည်နာမည် ထည့်ပါဦး။", "သတိပေးချက်",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            Button newMerchantBtn = new Button();
+            newMerchantBtn.Text = txtMarchantName.Text;
+            newMerchantBtn.Width = 150;
+            newMerchantBtn.Height = 40;
+            newMerchantBtn.BackColor = Color.LightBlue;
+            newMerchantBtn.Font = new Font("Myanmar Text", 12);
+
+           
+            newMerchantBtn.Click += (s, ev) =>
+            {
+                
+                string name = newMerchantBtn.Text;
+                MessageBox.Show($"ရွေးချယ်ထားတဲ့ ကုန်သည်: {name}");
+                new Dashboard(name).Show();
+            };
+
+          
+            marchantDisplayLayout.Controls.Add(newMerchantBtn);
+
+            txtMarchantName.Clear();
+            txtMarchantName.Focus();
         }
+
+      
+        
+
+       
+
     }
 }
