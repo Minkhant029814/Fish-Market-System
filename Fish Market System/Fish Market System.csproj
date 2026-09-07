@@ -105,6 +105,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\DepotPurchaseDetails.cs" />
     <Compile Include="model\Customer.cs" />
     <Compile Include="model\Depot.cs" />
     <Compile Include="model\DepotPurchase.cs" />

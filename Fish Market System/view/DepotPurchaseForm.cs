@@ -29,6 +29,7 @@ namespace Fish_Market_System.view
 
         private void DisplayData()
         {
+            DisplayDepotPurchasesDetails();
             // ComboBox တွေကို ရှင်းပါ
             cmbDepot.Items.Clear();
             cmbSpecies.Items.Clear();
@@ -89,9 +90,53 @@ namespace Fish_Market_System.view
                 txtQuantity.Focus();
 
             }
+            DisplayDepotPurchasesDetails();
 
             MessageBox.Show("Depot id is " + purchase.DepotId + "\n " + "fish species " + purchase.SpeciesId + "\n " + "merchant Id " + purchase.MerchantId);
            
+        }
+
+
+        //Rendering DepotPurchasesDetails
+
+        private void DisplayDepotPurchasesDetails()
+        {
+
+            try
+
+            {
+                purchaseDetailsView.Rows.Clear();
+                List<DepotPurchaseDetails> purchases = purchaseService.GetPurchaseByMerchantId(merchantId);
+                decimal totalQuantity = 0;
+                decimal totalAmount = 0;
+
+                foreach (var p in purchases)
+                {
+                    totalQuantity += p.Quantity;
+                    totalAmount += p.TotalBuyAmount;
+                }
+                foreach (DepotPurchaseDetails purchase in purchases)
+                {
+                    purchaseDetailsView.Rows.Add(
+                        purchase.FishName,
+                        purchase.BuyPrice.ToString("N2"),
+                        purchase.Quantity.ToString("N2"),
+                        purchase.TotalBuyAmount.ToString("N2"),
+                        purchase.PurchaseDate.ToString("dd-MM-yyyy")
+                        );
+    
+            }
+                lblTotalQuantity.Text = $"စုစုပေါင်းကုန်ချိန်  { totalQuantity:N2} ";
+                lblTotalAmount.Text = $"စုစုပေါင်းတန်ဖိုး {totalAmount:N2} ကျပ် ";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"အမှားအယွင်းဖြစ်ပွားခဲ့သည်။\n{ex.Message}", "Error",
+                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+            }
         }
     }
 }

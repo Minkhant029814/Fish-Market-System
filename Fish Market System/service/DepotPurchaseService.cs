@@ -16,5 +16,10 @@ namespace Fish_Market_System.service
         {
             return purchaseRepo.AddDepotPurchase(dp);
         }
+
+        public List<DepotPurchaseDetails> GetPurchaseByMerchantId(int merchantId)
+        {
+            return purchaseRepo.GetPurchaseByMerchantId(merchantId);
+        }
     }
 }
