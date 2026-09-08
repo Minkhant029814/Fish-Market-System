@@ -13,6 +13,8 @@ namespace Fish_Market_System.model
         public decimal Quantity { get; set; } 
         public decimal BuyPrice { get; set; } 
         public decimal TotalBuyAmount { get; set; } 
+
+        public string DepotName { get; set; }
         public DateTime PurchaseDate { get; set; } 
     }
 }

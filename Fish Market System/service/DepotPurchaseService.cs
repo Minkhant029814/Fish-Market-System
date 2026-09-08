@@ -1,4 +1,5 @@
-﻿using Fish_Market_System.model;
+﻿using Fish_Market_System.dto;
+using Fish_Market_System.model;
 using Fish_Market_System.repository;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,7 @@ namespace Fish_Market_System.service
         {
             return purchaseRepo.GetPurchaseByMerchantId(merchantId);
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Fish_Market_System.database;
+using Fish_Market_System.dto;
 using Fish_Market_System.model;
 using MySql.Data.MySqlClient;
 using System;
@@ -39,20 +40,17 @@ namespace Fish_Market_System.repository
             List<DepotPurchaseDetails> purchases = new List<DepotPurchaseDetails>();
             string query = @"SELECT
                     dp.purchaseId,
-                     fs.speciesName as FishName,
-                    dp.quantity as Quantity,
-dp.buyprice as Buyprice,
-dp.totalBuyAmount as TotalAmount,
-dp.purchaseDate as purchaseDate
-
-FROM depotpurchases dp
-Inner Join
-    fishSpecies fs on dp.speciesId = fs.speciesId
-where 
-    dp.merchantId = @MerchantId
-order By
-    dp.purchaseDate DESC
-";
+                    fs.speciesName AS FishName,
+                    dp.quantity AS Quantity,
+                    dp.buyprice AS Buyprice,
+                    dp.totalBuyAmount AS TotalAmount,
+                    d.depotName,
+                    dp.purchaseDate AS purchaseDate
+                FROM depotpurchases dp
+                INNER JOIN fishSpecies fs ON dp.speciesId = fs.speciesId
+                INNER JOIN Depots d ON d.depotId = dp.depotId
+                WHERE dp.merchantId = @MerchantId
+                ORDER BY dp.purchaseDate DESC";
 
             try
             {
@@ -73,6 +71,7 @@ order By
                                 Quantity = Convert.ToDecimal(row["Quantity"]),
                                 BuyPrice = Convert.ToDecimal(row["Buyprice"]),
                                 TotalBuyAmount = Convert.ToDecimal(row["TotalAmount"]),
+                                DepotName = row["depotName"].ToString(),
                                 PurchaseDate = Convert.ToDateTime(row["PurchaseDate"])
 
                             };
@@ -89,5 +88,8 @@ order By
                 throw;
             }
         }
+
+       
     }
 }
+    

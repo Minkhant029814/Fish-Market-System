@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.lblTotalAmount = new System.Windows.Forms.Label();
+            this.lblTotalQuantity = new System.Windows.Forms.Label();
             this.btnAddPurchases = new Guna.UI2.WinForms.Guna2Button();
             this.label5 = new System.Windows.Forms.Label();
             this.txtBuyPrice = new Guna.UI2.WinForms.Guna2TextBox();
@@ -48,9 +50,8 @@
             this.BuyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.depotName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.purchaseDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblTotalQuantity = new System.Windows.Forms.Label();
-            this.lblTotalAmount = new System.Windows.Forms.Label();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.purchaseDetailsView)).BeginInit();
             this.SuspendLayout();
@@ -74,6 +75,27 @@
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1097, 234);
             this.mainPanel.TabIndex = 0;
+            // 
+            // lblTotalAmount
+            // 
+            this.lblTotalAmount.AutoSize = true;
+            this.lblTotalAmount.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalAmount.ForeColor = System.Drawing.Color.Blue;
+            this.lblTotalAmount.Location = new System.Drawing.Point(593, 178);
+            this.lblTotalAmount.Name = "lblTotalAmount";
+            this.lblTotalAmount.Size = new System.Drawing.Size(61, 32);
+            this.lblTotalAmount.TabIndex = 14;
+            this.lblTotalAmount.Text = "label2";
+            // 
+            // lblTotalQuantity
+            // 
+            this.lblTotalQuantity.AutoSize = true;
+            this.lblTotalQuantity.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalQuantity.Location = new System.Drawing.Point(27, 165);
+            this.lblTotalQuantity.Name = "lblTotalQuantity";
+            this.lblTotalQuantity.Size = new System.Drawing.Size(61, 32);
+            this.lblTotalQuantity.TabIndex = 13;
+            this.lblTotalQuantity.Text = "label2";
             // 
             // btnAddPurchases
             // 
@@ -202,19 +224,19 @@
             // 
             // purchaseDetailsView
             // 
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            this.purchaseDetailsView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.purchaseDetailsView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.purchaseDetailsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.purchaseDetailsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.purchaseDetailsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.purchaseDetailsView.ColumnHeadersHeight = 51;
             this.purchaseDetailsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.purchaseDetailsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -222,30 +244,31 @@
             this.BuyPrice,
             this.Quantity,
             this.TotalAmount,
+            this.depotName,
             this.purchaseDate});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.purchaseDetailsView.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.purchaseDetailsView.DefaultCellStyle = dataGridViewCellStyle3;
             this.purchaseDetailsView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.purchaseDetailsView.Location = new System.Drawing.Point(20, 280);
             this.purchaseDetailsView.Name = "purchaseDetailsView";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.purchaseDetailsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.purchaseDetailsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.purchaseDetailsView.RowHeadersVisible = false;
             this.purchaseDetailsView.RowHeadersWidth = 51;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.purchaseDetailsView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.purchaseDetailsView.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.purchaseDetailsView.RowTemplate.Height = 30;
             this.purchaseDetailsView.Size = new System.Drawing.Size(1089, 279);
             this.purchaseDetailsView.TabIndex = 1;
@@ -279,32 +302,17 @@
             this.TotalAmount.MinimumWidth = 6;
             this.TotalAmount.Name = "TotalAmount";
             // 
+            // depotName
+            // 
+            this.depotName.HeaderText = "ဒိုင်အမည်";
+            this.depotName.MinimumWidth = 6;
+            this.depotName.Name = "depotName";
+            // 
             // purchaseDate
             // 
             this.purchaseDate.HeaderText = "နေ့စွဲ";
             this.purchaseDate.MinimumWidth = 6;
             this.purchaseDate.Name = "purchaseDate";
-            // 
-            // lblTotalQuantity
-            // 
-            this.lblTotalQuantity.AutoSize = true;
-            this.lblTotalQuantity.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalQuantity.Location = new System.Drawing.Point(27, 165);
-            this.lblTotalQuantity.Name = "lblTotalQuantity";
-            this.lblTotalQuantity.Size = new System.Drawing.Size(61, 32);
-            this.lblTotalQuantity.TabIndex = 13;
-            this.lblTotalQuantity.Text = "label2";
-            // 
-            // lblTotalAmount
-            // 
-            this.lblTotalAmount.AutoSize = true;
-            this.lblTotalAmount.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalAmount.ForeColor = System.Drawing.Color.Blue;
-            this.lblTotalAmount.Location = new System.Drawing.Point(593, 178);
-            this.lblTotalAmount.Name = "lblTotalAmount";
-            this.lblTotalAmount.Size = new System.Drawing.Size(61, 32);
-            this.lblTotalAmount.TabIndex = 14;
-            this.lblTotalAmount.Text = "label2";
             // 
             // DepotPurchaseForm
             // 
@@ -335,12 +343,13 @@
         private Guna.UI2.WinForms.Guna2Button btnAddPurchases;
         private System.Windows.Forms.Label label5;
         private Guna.UI2.WinForms.Guna2DataGridView purchaseDetailsView;
+        private System.Windows.Forms.Label lblTotalQuantity;
+        private System.Windows.Forms.Label lblTotalAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn FishType;
         private System.Windows.Forms.DataGridViewTextBoxColumn BuyPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn Quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn depotName;
         private System.Windows.Forms.DataGridViewTextBoxColumn purchaseDate;
-        private System.Windows.Forms.Label lblTotalQuantity;
-        private System.Windows.Forms.Label lblTotalAmount;
     }
 }
