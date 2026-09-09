@@ -20,6 +20,7 @@ namespace Fish_Market_System
         private readonly FishSpeciesService fishSpeciesService = new FishSpeciesService();
         private readonly DepotSaleService saleService = new DepotSaleService();
         private readonly SaleReportService reportService = new SaleReportService();
+        private readonly PurchaseReportService purchaseReportService = new PurchaseReportService();
 
         // Lists
         private List<Merchant> merchants;
@@ -42,13 +43,16 @@ namespace Fish_Market_System
             // DataGridView တွေကို Configure လုပ်ပါ
             ConfigureDataGridView(dgvCash);
             ConfigureDataGridView(dvgCredit);
-            ConfigureDataGridView(dvgDeli);
 
             // Default Tab ရွေးပါ
             reportTabControl.SelectedTab = CashPage;
 
             // Data အကုန် Load လုပ်ပါ
             LoadAllData();
+
+            //DateTime ကို default သတ်မှတ်ထားခြင်း
+            dtpEndDate.Value = DateTime.Now;
+            dtpStartDate.Value = DateTime.Now.AddDays(-7);
         }
 
         private void ConfigureDataGridView(DataGridView view)
@@ -84,6 +88,7 @@ namespace Fish_Market_System
             displayAndRefreshDepot();
             displayAndRefreshFish();
             DisplayClientsAndTheirPurchaseList();
+            LoadSalesRate();
         }
 
         #endregion
@@ -448,6 +453,7 @@ namespace Fish_Market_System
                     HighlightSelectedButton(ClientPanel, clickedBtn);
 
                     string paymentType = GetPaymentFromTab();
+                    MessageBox.Show($"Customer Id is {selectedCustomer.CustomerId} And Payment Type is {paymentType} ");
                     DisplaySaleReportForCustomer(selectedCustomer.CustomerId, paymentType);
 
                     lblSelectedCustomer.Text = $"📋 {selectedCustomer.CustomerName} ရဲ့ ဝယ်ယူမှုစာရင်း";
@@ -487,12 +493,13 @@ namespace Fish_Market_System
                 // DataGridView ကိုရှင်းပါ (Rows ပဲရှင်းပါ)
                 view.Rows.Clear();
 
+                MessageBox.Show("Count is " + reports.Count);
                 if (reports.Count > 0)
                 {
                     foreach (CustomerSaleReport report in reports)
                     {
                         view.Rows.Add(
-                            report.DepotName ?? "",
+                            report.MerchantName ?? "",
                             report.FishName ?? "",
                             report.Quantity.ToString("N2"),
                             report.Price.ToString("#,##0.00"),
@@ -534,9 +541,8 @@ namespace Fish_Market_System
                     return dgvCash;
                 case "CREDIT":
                     return dvgCredit;
-                case "DELI":
-                case "DELIVERY":
-                    return dvgDeli;
+               
+                
                 default:
                     return dgvCash;
             }
@@ -548,8 +554,7 @@ namespace Fish_Market_System
                 return "CASH";
             else if (reportTabControl.SelectedTab == CreditPage)
                 return "CREDIT";
-            else if (reportTabControl.SelectedTab == DeliPage)
-                return "DELI";
+           
 
             return "CASH";
         }
@@ -586,5 +591,147 @@ namespace Fish_Market_System
                 DisplaySaleReportForCustomer(selectedCustomerIdForReport, paymentType);
             }
         }
+
+        #region Inventory Sections
+        private void DisplayPurchaseReport()
+        {
+            try
+            {
+                DateTime startDate = dtpStartDate.Value.Date;
+                DateTime endDate = dtpEndDate.Value.Date.AddDays(1).AddSeconds(-1);
+
+                List<PurchaseReport> reports = purchaseReportService.GetPurchasesByDateRange(startDate, endDate);
+                dgvInventoryReport.Rows.Clear();
+
+                if(reports.Count > 0)
+                {
+                    foreach(PurchaseReport report in reports)
+                    {
+                        dgvInventoryReport.Rows.Add(
+
+                            report.MerchantName,
+                            report.FishName,
+                            report.Price.ToString("#,##0.00"),
+                            report.Quantity.ToString("N2"),
+                            report.TotalAmount.ToString("#,##0.00"),
+                            report.PurchaseDate.ToString("dd/MM/yyyy")
+                            );
+                    }
+
+                    decimal totalAmount = reports.Sum(r => r.TotalAmount);
+                    decimal quantity = reports.Sum(r => r.Quantity);
+
+
+                    lblDescription.Text = $"သွင်းကုန်စာရင်း {quantity}· စုစုပေါင်းတန်ဖိုး {totalAmount:N2}";
+                }
+                else
+                {
+                    dgvInventoryReport.Rows.Add("ဒေတာမရှိပါ", "", "", "", "", "");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Error: {ex.Message}", "Error",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            DisplayPurchaseReport();
+        }
+
+        #endregion
+
+
+        #region Sale Report
+        private void LoadSalesRate()
+        {
+            comboMerchants.Items.Clear();
+            foreach(Merchant m in merchants)
+            {
+                comboMerchants.Items.Add(m);
+                
+            }
+
+            //comboMerchants.SelectedIndex = 0;
+
+      
+            // ComboBox ထဲမှာ မလိုလားအပ်တဲ့ Duplicate item များ မဖြစ်အောင် Clear အရင်လုပ်ပါ
+
+            // Merchant list ကို DataBind လုပ်ခြင်း
+            comboMerchants.DisplayMember = "MerchantName"; // User ကို ပြသချင်သည့် Field
+            comboMerchants.ValueMember = "MerchantId";     // နောက်ကွယ်မှာ သုံးချင်သည့် ID Field
+        
+        }
+
+        private void comboMerchants_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboMerchants.SelectedItem is Merchant selectedMerchant)
+            {
+                
+                int merchantId = selectedMerchant.MerchantId;
+
+               
+                //MessageBox.Show($"Merchant Id is {merchantId}");
+                RenderSalesData(merchantId);
+            }
+        }
+
+        private void RenderSalesData(int merchantId)
+        {
+            // ၁။ Merchant ရဲ့ Sales Data အားလုံးကို ယူမည်
+            List<MerchantSalesSummary> allSales = merchantService.GetSalesByMerchantId(merchantId);
+
+            // ၂။ LINQ ဖြင့် Cash နှင့် Credit ခွဲထုတ်မည်
+            var cashSales = allSales.Where(s => s.PaymentType.ToLower() == "cash").ToList();
+            var creditSales = allSales.Where(s => s.PaymentType.ToLower() == "credit").ToList();
+
+            // ၃။ dgvCash ထဲသို့ ထည့်ခြင်း
+            PopulateGrid(dgvCashSales, cashSales);
+            decimal totalCashSalesAmount = cashSales.Sum(c => c.TotalAmount);
+
+            // ၄။ dgvCredit ထဲသို့ ထည့်ခြင်း
+            PopulateGrid(dgvCreditSales, creditSales);
+            decimal totalCreditSalesAmount = creditSales.Sum(c => c.TotalAmount);
+
+            lblTotalCashSales.Text = $"လက်ငင်းရောင်းရငွေ စုစုပေါင်း = { totalCashSalesAmount:N2}ကျပ် ";
+            lblTotalCreditSales.Text = $"အကြွေးရောင်းရငွေ စုစုပေါင်း = { totalCreditSalesAmount:N2} ကျပ်";
+        }
+
+        // DataGridView ထဲသို့ Data ထည့်ပေးသည့် Helper Method (Code စိစစ်သန့်ရှင်းစေရန်)
+        private void PopulateGrid(DataGridView dgv, List<MerchantSalesSummary> salesList)
+        {
+            dgv.SuspendLayout();
+            dgv.DataSource = null;
+            dgv.Rows.Clear();
+
+           if(salesList.Count  > 0)
+            {
+                foreach (MerchantSalesSummary sale in salesList)
+                {
+                    dgv.Rows.Add(
+                        sale.CustomerName ?? "",
+                        sale.FishName ?? "",
+                        sale.Quantity.ToString("N2"),
+                        sale.Amount.ToString("N2"),
+                        sale.TotalAmount.ToString("N2")
+                    );
+                }
+
+                
+            } else
+            {
+                dgv.Rows.Add("ဒေတာမရှိပါ", "", "", "", "");
+            }
+
+                dgv.ResumeLayout();
+        }
+
+        #endregion
+
+
     }
 }

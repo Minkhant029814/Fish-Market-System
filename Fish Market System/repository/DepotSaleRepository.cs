@@ -13,121 +13,159 @@ namespace Fish_Market_System.Repositories
 
         public bool AddSale(DepotSale sale)
         {
+            MySqlConnection conn = null;
+            MySqlTransaction transaction = null;
+
             try
             {
-                // ၁။ Stock စစ်ဆေးပါ
+                // ၁။ Stock စစ်ဆေးပါ (Current Stock ကနေ)
                 if (!CheckStockAvailability(sale.DepotId, sale.SpeciesId, sale.Quantity))
                 {
                     decimal available = GetAvailableStock(sale.DepotId, sale.SpeciesId);
                     throw new Exception($"Stock မလုံလောက်ပါ။ ရှိသော ပမာဏ: {available:N2}, လိုအပ်သော ပမာဏ: {sale.Quantity:N2}");
                 }
 
-                // ၂။ PaymentType ကို သေချာစစ်ပါ
+                // ၂။ PaymentType ပြောင်းပါ
                 string paymentType = sale.PaymentType?.ToUpper() ?? "CASH";
-
-                // ENUM မှာ ပါတဲ့တန်ဖိုးတွေပဲဖြစ်ရမယ်
-                if (paymentType != "CASH" && paymentType != "CREDIT" && paymentType != "DELI")
+                string dbPaymentType;
+                switch (paymentType)
                 {
-                    paymentType = "CASH"; // Default
+                    case "CASH": dbPaymentType = "cash"; break;
+                    case "CREDIT": dbPaymentType = "credit"; break;
+                    case "DELI":
+                    case "DELIVERY": dbPaymentType = "deli"; break;
+                    default: dbPaymentType = "cash"; break;
                 }
 
-                // ၃။ Insert Query
-                string insertSaleQuery = @"INSERT INTO depotsales 
-                                    (depotId, customerId, speciesId, quantity, 
-                                     sellprice, saleDate, paymentType)
-                                    VALUES 
-                                    (@dId, @Cid, @sId, @q, @sell, @Sdate, @pay)";
+                // ၃။ Connection နဲ့ Transaction စတင်ပါ
+                conn = dbConn.GetConnection();
+                conn.Open();
+                transaction = conn.BeginTransaction();
 
-                string updateStockQuery = @"UPDATE depotpurchases 
-                                    SET quantity = quantity - @q 
-                                    WHERE depotId = @dId 
-                                    AND speciesId = @sId 
-                                    AND quantity >= @q
-                                    ORDER BY purchaseDate ASC 
-                                    LIMIT 1";
+                // =========================================================
+                // ၄။ DepotSales ထဲထည့်ပြီး SaleId ကိုပြန်ရယူပါ
+                // =========================================================
+                string insertSaleQuery = @"
+            INSERT INTO depotsales 
+                (depotId, customerId, speciesId, quantity, sellprice, saleDate, paymentType)
+            VALUES 
+                (@dId, @Cid, @sId, @q, @sell, @Sdate, @pay);
+            SELECT LAST_INSERT_ID();";
 
-                // ၄။ Parameters
-                MySqlParameter[] insertParams = new MySqlParameter[]
+                int saleId;
+                using (MySqlCommand cmd = new MySqlCommand(insertSaleQuery, conn, transaction))
                 {
-            new MySqlParameter("@dId", sale.DepotId),
-            new MySqlParameter("@Cid", sale.CustomerId),
-            new MySqlParameter("@sId", sale.SpeciesId),
-            new MySqlParameter("@q", sale.Quantity),
-            new MySqlParameter("@sell", sale.SellPrice),
-            new MySqlParameter("@Sdate", sale.SaleDate),
-            new MySqlParameter("@pay", paymentType) // String အတိုင်း
-                };
+                    cmd.Parameters.AddWithValue("@dId", sale.DepotId);
+                    cmd.Parameters.AddWithValue("@Cid", sale.CustomerId);
+                    cmd.Parameters.AddWithValue("@sId", sale.SpeciesId);
+                    cmd.Parameters.AddWithValue("@q", sale.Quantity);
+                    cmd.Parameters.AddWithValue("@sell", sale.SellPrice);
+                    cmd.Parameters.AddWithValue("@Sdate", sale.SaleDate);
+                    cmd.Parameters.AddWithValue("@pay", dbPaymentType);
 
-                MySqlParameter[] updateParams = new MySqlParameter[]
+                    saleId = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+
+                // =========================================================
+                // ၅။ Inventory Transactions ထဲထည့် (SaleId ကိုသုံးပါ)
+                // =========================================================
+                string insertTransactionQuery = @"
+            INSERT INTO inventory_transactions 
+                (depotId, speciesId, transactionType, referenceId, referenceType, quantity, transactionDate)
+            VALUES 
+                (@dId, @sId, 'OUT', @refId, 'SALE', @q, @Sdate)";
+
+                using (MySqlCommand cmd = new MySqlCommand(insertTransactionQuery, conn, transaction))
                 {
-            new MySqlParameter("@dId", sale.DepotId),
-            new MySqlParameter("@sId", sale.SpeciesId),
-            new MySqlParameter("@q", sale.Quantity)
-                };
+                    cmd.Parameters.AddWithValue("@dId", sale.DepotId);
+                    cmd.Parameters.AddWithValue("@sId", sale.SpeciesId);
+                    cmd.Parameters.AddWithValue("@q", sale.Quantity);
+                    cmd.Parameters.AddWithValue("@refId", saleId);
+                    cmd.Parameters.AddWithValue("@Sdate", sale.SaleDate);
+                    cmd.ExecuteNonQuery();
+                }
 
-                // ၅။ Transaction
-                List<string> queries = new List<string> { insertSaleQuery, updateStockQuery };
-                List<MySqlParameter[]> paramList = new List<MySqlParameter[]> { insertParams, updateParams };
+                // =========================================================
+                // ၆။ Current Stock ကို Update လုပ်ပါ
+                // =========================================================
+                string updateStockQuery = @"
+            UPDATE current_stock 
+            SET quantity = quantity - @q 
+            WHERE depotId = @dId 
+            AND speciesId = @sId";
 
-                return dbConn.ExecuteTransaction(queries, paramList);
+                using (MySqlCommand cmd = new MySqlCommand(updateStockQuery, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@dId", sale.DepotId);
+                    cmd.Parameters.AddWithValue("@sId", sale.SpeciesId);
+                    cmd.Parameters.AddWithValue("@q", sale.Quantity);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // =========================================================
+                // ၇။ အကုန်အောင်မြင်ရင် Commit
+                // =========================================================
+                transaction.Commit();
+                return true;
             }
             catch (Exception ex)
             {
+                transaction?.Rollback();
                 Console.WriteLine($"Error in AddSale: {ex.Message}");
                 throw;
             }
+            finally
+            {
+                conn?.Close();
+            }
         }
-        // Stock စစ်ဆေးမယ်
-        private bool CheckStockAvailability(int depotId, int speciesId, decimal quantity)
-        {
-            decimal available = GetAvailableStock(depotId, speciesId);
-            return available >= quantity;
-        }
-
-        // ရှိသော Stock ပမာဏကို ယူမယ်
         private decimal GetAvailableStock(int depotId, int speciesId)
         {
-            string query = @"SELECT COALESCE(SUM(quantity), 0) AS TotalQuantity 
-                             FROM depotpurchases 
-                             WHERE depotId = @dId 
-                             AND speciesId = @sId 
-                             AND quantity > 0";
+            string query = @"SELECT quantity 
+                     FROM current_stock 
+                     WHERE depotId = @dId 
+                     AND speciesId = @sId";
 
             MySqlParameter[] ps = new MySqlParameter[]
             {
-                new MySqlParameter("@dId", depotId),
-                new MySqlParameter("@sId", speciesId)
+        new MySqlParameter("@dId", depotId),
+        new MySqlParameter("@sId", speciesId)
             };
 
             DataTable dt = dbConn.GetData(query, ps);
 
-            if (dt.Rows.Count > 0 && dt.Rows[0]["TotalQuantity"] != DBNull.Value)
+            if (dt != null && dt.Rows.Count > 0 && dt.Rows[0]["quantity"] != DBNull.Value)
             {
-                return Convert.ToDecimal(dt.Rows[0]["TotalQuantity"]);
+                return Convert.ToDecimal(dt.Rows[0]["quantity"]);
             }
 
             return 0;
         }
 
-
+        private bool CheckStockAvailability(int depotId, int speciesId, decimal quantity)
+        {
+            decimal available = GetAvailableStock(depotId, speciesId);
+            return available >= quantity;
+        }
         public DepotStock GetDepotStockById(int depotId)
         {
             string query = @"SELECT 
-                                d.depotId,
-                                d.depotname,
-                                COALESCE(SUM(dp.quantity), 0) AS TotalQuantity
-                            FROM 
-                                depots d
-                            LEFT JOIN 
-                                depotpurchases dp ON d.depotId = dp.depotId
-                            WHERE 
-                                d.depotId = @DepotId
-                            GROUP BY 
-                                d.depotId, d.depotname";
+                        d.depotId,
+                        d.depotname,
+                        COALESCE(SUM(cs.quantity), 0) AS TotalQuantity
+                    FROM 
+                        depots d
+                    LEFT JOIN 
+                        current_stock cs ON d.depotId = cs.depotId
+                    WHERE 
+                        d.depotId = @DepotId
+                    GROUP BY 
+                        d.depotId, d.depotname";
+
             MySqlParameter[] ps = new MySqlParameter[]
-           {
-                new MySqlParameter("@DepotId", depotId)
-           };
+            {
+        new MySqlParameter("@DepotId", depotId)
+            };
 
             try
             {
@@ -146,53 +184,69 @@ namespace Fish_Market_System.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error in GetDepotStockById: {ex.Message}");
                 throw;
             }
 
             return null;
         }
-
-
         public List<DepotFish> GetFishByDepot(int depotId)
         {
             try
             {
-                string query = @"select fs.speciesId, fs.speciesName,Sum(dp.quantity) as total_quantity from depotpurchases dp join fishspecies fs on dp.speciesId = fs.speciesId 
-where dp.depotId = @depotId group by fs.speciesId,fs.speciesName order by fs.speciesName;";
+                string query = @"
+            SELECT 
+                fs.speciesId,
+                fs.speciesName,
+                COALESCE(cs.quantity, 0) AS total_quantity
+            FROM 
+                fishspecies fs
+            LEFT JOIN 
+                current_stock cs ON fs.speciesId = cs.speciesId AND cs.depotId = @depotId
+            WHERE 
+                cs.quantity > 0 OR cs.quantity IS NULL
+            ORDER BY 
+                fs.speciesName";
 
-                MySqlParameter[] ps =
+                MySqlParameter[] ps = new MySqlParameter[]
                 {
-                    new MySqlParameter("@depotId",depotId)
+            new MySqlParameter("@depotId", depotId)
                 };
 
                 List<DepotFish> fishes = new List<DepotFish>();
-                using(DataTable dt = dbConn.GetData(query, ps))
+
+                using (DataTable dt = dbConn.GetData(query, ps))
                 {
-                    if(dt.Rows != null && dt.Rows.Count > 0)
+                    if (dt != null && dt.Rows.Count > 0)
                     {
-                        foreach(DataRow row in dt.Rows)
+                        foreach (DataRow row in dt.Rows)
                         {
-                            DepotFish fish = new DepotFish
+                            decimal quantity = row["total_quantity"] != DBNull.Value
+                                ? Convert.ToDecimal(row["total_quantity"])
+                                : 0;
+
+                            // quantity 0 ထက်ကြီးမှပဲထည့်ပါ (သို့) အကုန်ထည့်ချင်ရင် ဒီအတိုင်းထားပါ
+                            if (quantity > 0)
                             {
-                                FishId = Convert.ToInt32(row["speciesId"]),
-                                FishName = row["speciesName"].ToString(),
-                                TotalQuantity = Convert.ToDecimal(row["total_quantity"])
-                            };
-                            fishes.Add(fish);
+                                DepotFish fish = new DepotFish
+                                {
+                                    FishId = Convert.ToInt32(row["speciesId"]),
+                                    FishName = row["speciesName"].ToString(),
+                                    TotalQuantity = quantity
+                                };
+                                fishes.Add(fish);
+                            }
                         }
                     }
                 }
+
                 return fishes;
-
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine("error is " + e.Message);
-
+                Console.WriteLine($"Error in GetFishByDepot: {ex.Message}");
                 throw;
             }
         }
-
     }
 }

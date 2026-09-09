@@ -30,6 +30,7 @@
         {
             this.mainPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.headerPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.FishByDepotPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.lblRemaingStockByDepot = new System.Windows.Forms.Label();
             this.btnAddSales = new Guna.UI2.WinForms.Guna2Button();
             this.cmbPaymentType = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -43,7 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbDepot = new Guna.UI2.WinForms.Guna2ComboBox();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.FishByDepotPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.mainPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +84,17 @@
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(952, 418);
             this.headerPanel.TabIndex = 0;
+            // 
+            // FishByDepotPanel
+            // 
+            this.FishByDepotPanel.AutoScroll = true;
+            this.FishByDepotPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.FishByDepotPanel.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FishByDepotPanel.Location = new System.Drawing.Point(460, 52);
+            this.FishByDepotPanel.Name = "FishByDepotPanel";
+            this.FishByDepotPanel.Size = new System.Drawing.Size(310, 93);
+            this.FishByDepotPanel.TabIndex = 1;
+            this.FishByDepotPanel.WrapContents = false;
             // 
             // lblRemaingStockByDepot
             // 
@@ -226,6 +237,7 @@
             this.cmbFishes.Name = "cmbFishes";
             this.cmbFishes.Size = new System.Drawing.Size(161, 36);
             this.cmbFishes.TabIndex = 3;
+            this.cmbFishes.SelectedIndexChanged += new System.EventHandler(this.cmbFishes_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -263,17 +275,6 @@
             this.lblTitle.Size = new System.Drawing.Size(68, 36);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "label1";
-            // 
-            // FishByDepotPanel
-            // 
-            this.FishByDepotPanel.AutoScroll = true;
-            this.FishByDepotPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.FishByDepotPanel.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FishByDepotPanel.Location = new System.Drawing.Point(460, 52);
-            this.FishByDepotPanel.Name = "FishByDepotPanel";
-            this.FishByDepotPanel.Size = new System.Drawing.Size(310, 93);
-            this.FishByDepotPanel.TabIndex = 1;
-            this.FishByDepotPanel.WrapContents = false;
             // 
             // DepotSalesForm
             // 

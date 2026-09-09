@@ -326,5 +326,10 @@ namespace Fish_Market_System.view
         {
             // လိုအပ်ရင် ထည့်ပါ
         }
+
+        private void cmbFishes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

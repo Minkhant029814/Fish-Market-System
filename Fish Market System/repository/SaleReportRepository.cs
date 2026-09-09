@@ -18,31 +18,32 @@ namespace Fish_Market_System.repository
         {
             List<CustomerSaleReport> reports = new List<CustomerSaleReport>();
 
-            // PaymentType ကို စစ်ဆေးပါ
             if (string.IsNullOrEmpty(paymentType))
             {
                 throw new ArgumentException("PaymentType မပါပါ။");
             }
 
             string query = @"
-        SELECT 
-            d.depotname AS DepotName,
-            fs.speciesName AS FishName,
-            ds.Sellprice AS Price,
-            ds.quantity AS Quantity,
-            ds.totalsellAmount AS TotalAmount,
-            ds.saleDate AS SaleDate
-        FROM 
-            depotsales ds
-        INNER JOIN 
-            depots d ON ds.depotId = d.depotId
-        INNER JOIN 
-            fishspecies fs ON ds.speciesId = fs.speciesId
-        WHERE 
-            ds.customerId = @CustomerId
-            AND ds.paymentType = @PaymentType
-        ORDER BY 
-            ds.saleDate DESC";
+SELECT 
+    m.merchantName AS MerchantName,
+    fs.speciesName AS FishName,
+    ds.Sellprice AS Price,
+    ds.quantity AS Quantity,
+    ds.totalsellAmount AS TotalAmount,
+    ds.saleDate AS SaleDate
+FROM 
+    depotsales ds
+INNER JOIN 
+    depotpurchases dp ON ds.depotId = dp.depotId AND ds.speciesId = dp.speciesId
+INNER JOIN 
+    merchants m ON dp.merchantId = m.merchantId
+INNER JOIN 
+    fishspecies fs ON ds.speciesId = fs.speciesId
+WHERE 
+    ds.customerId = @CustomerId
+    AND ds.paymentType = @PaymentType
+ORDER BY 
+    ds.saleDate DESC";
 
             MySqlParameter[] ps =
             {
@@ -58,7 +59,17 @@ namespace Fish_Market_System.repository
                     {
                         foreach (DataRow row in dt.Rows)
                         {
-                            reports.Add(MapDataRowToReport(row));
+                            CustomerSaleReport report = new CustomerSaleReport
+                            {
+                                MerchantName = row["MerchantName"].ToString(),
+                                FishName = row["FishName"].ToString(),
+                                Price = Convert.ToDecimal(row["Price"]),
+                                Quantity = Convert.ToDecimal(row["Quantity"]),
+                                TotalAmount = Convert.ToDecimal(row["TotalAmount"]),
+                                SaleDate = Convert.ToDateTime(row["SaleDate"])
+                            };
+
+                            reports.Add(report);
                         }
                     }
                 }
@@ -71,28 +82,6 @@ namespace Fish_Market_System.repository
                 throw new Exception("ဒေတာရယူရာတွင် အမှားအယွင်းဖြစ်ပွားခဲ့သည်။", ex);
             }
         }
-
-        private CustomerSaleReport MapDataRowToReport(DataRow row)
-        {
-            return new CustomerSaleReport
-            {
-                DepotName = row["DepotName"]?.ToString() ?? "",
-                FishName = row["FishName"]?.ToString() ?? "",
-                Price = GetDecimalValue(row, "Price"),
-                Quantity = GetDecimalValue(row, "Quantity"),
-                TotalAmount = GetDecimalValue(row, "TotalAmount"),
-                SaleDate = GetDateTimeValue(row, "SaleDate")
-            };
-        }
-
-        private decimal GetDecimalValue(DataRow row, string columnName)
-        {
-            return row[columnName] != DBNull.Value ? Convert.ToDecimal(row[columnName]) : 0;
-        }
-
-        private DateTime GetDateTimeValue(DataRow row, string columnName)
-        {
-            return row[columnName] != DBNull.Value ? Convert.ToDateTime(row[columnName]) : DateTime.Now;
-        }
+       
     }
 }

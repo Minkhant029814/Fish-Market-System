@@ -15,7 +15,7 @@ namespace Fish_Market_System.service
 
         public bool AddPurchase(DepotPurchase dp)
         {
-            return purchaseRepo.AddDepotPurchase(dp);
+            return purchaseRepo.AddPurchase(dp);
         }
 
         public List<DepotPurchaseDetails> GetPurchaseByMerchantId(int merchantId)
