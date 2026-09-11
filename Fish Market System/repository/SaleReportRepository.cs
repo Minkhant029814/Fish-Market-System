@@ -23,33 +23,45 @@ namespace Fish_Market_System.repository
                 throw new ArgumentException("PaymentType မပါပါ။");
             }
 
-            string query = @"
-SELECT 
-    m.merchantName AS MerchantName,
-    fs.speciesName AS FishName,
-    ds.Sellprice AS Price,
-    ds.quantity AS Quantity,
-    ds.totalsellAmount AS TotalAmount,
-    ds.saleDate AS SaleDate
-FROM 
-    depotsales ds
-INNER JOIN 
-    depotpurchases dp ON ds.depotId = dp.depotId AND ds.speciesId = dp.speciesId
-INNER JOIN 
-    merchants m ON dp.merchantId = m.merchantId
-INNER JOIN 
-    fishspecies fs ON ds.speciesId = fs.speciesId
-WHERE 
-    ds.customerId = @CustomerId
-    AND ds.paymentType = @PaymentType
-ORDER BY 
-    ds.saleDate DESC";
+            // PaymentType ကို Database ENUM နဲ့ကိုက်ညီအောင် ပြောင်းပါ
+            string type = paymentType.ToUpper();
+            string dbPaymentType;
 
-            MySqlParameter[] ps =
+            if (type == "CASH")
+                dbPaymentType = "cash";
+            else if (type == "CREDIT")
+                dbPaymentType = "credit";
+            else if (type == "DELI" || type == "DELIVERY")
+                dbPaymentType = "deli";
+            else
+                dbPaymentType = "cash";
+
+            // depotPurchases တစ်ခုတည်းကနေ တိုက်ရိုက်ထုတ်
+            string query = @"
+        SELECT 
+            m.merchantName AS MerchantName,
+            fs.speciesName AS FishName,
+            dp.buyprice AS Price,
+            dp.quantity AS Quantity,
+            dp.TotalBuyAmount AS TotalAmount,
+            dp.purchaseDate AS SaleDate
+        FROM 
+            depotpurchases dp
+        INNER JOIN 
+            merchants m ON dp.merchantId = m.merchantId
+        INNER JOIN 
+            fishspecies fs ON dp.speciesId = fs.speciesId
+        WHERE 
+            dp.customerId = @CustomerId
+            AND dp.paymentType = @PaymentType
+        ORDER BY 
+            dp.purchaseDate DESC";
+
+            MySqlParameter[] ps = new MySqlParameter[]
             {
         new MySqlParameter("@CustomerId", customerId),
-        new MySqlParameter("@PaymentType", paymentType)
-    };
+        new MySqlParameter("@PaymentType", dbPaymentType)
+            };
 
             try
             {
@@ -61,12 +73,12 @@ ORDER BY
                         {
                             CustomerSaleReport report = new CustomerSaleReport
                             {
-                                MerchantName = row["MerchantName"].ToString(),
-                                FishName = row["FishName"].ToString(),
-                                Price = Convert.ToDecimal(row["Price"]),
-                                Quantity = Convert.ToDecimal(row["Quantity"]),
-                                TotalAmount = Convert.ToDecimal(row["TotalAmount"]),
-                                SaleDate = Convert.ToDateTime(row["SaleDate"])
+                                MerchantName = row["MerchantName"]?.ToString() ?? "",
+                                FishName = row["FishName"]?.ToString() ?? "",
+                                Price = row["Price"] != DBNull.Value ? Convert.ToDecimal(row["Price"]) : 0,
+                                Quantity = row["Quantity"] != DBNull.Value ? Convert.ToDecimal(row["Quantity"]) : 0,
+                                TotalAmount = row["TotalAmount"] != DBNull.Value ? Convert.ToDecimal(row["TotalAmount"]) : 0,
+                                SaleDate = row["SaleDate"] != DBNull.Value ? Convert.ToDateTime(row["SaleDate"]) : DateTime.Now
                             };
 
                             reports.Add(report);
@@ -82,6 +94,5 @@ ORDER BY
                 throw new Exception("ဒေတာရယူရာတွင် အမှားအယွင်းဖြစ်ပွားခဲ့သည်။", ex);
             }
         }
-       
     }
 }

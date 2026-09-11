@@ -17,9 +17,9 @@ namespace Fish_Market_System.service
             return customerRepository.AddCustomer(cus);
         }
 
-        public List<Customer> GetAll()
+        public List<Customer> GetAll(string name = null)
         {
-            return customerRepository.GetAll();
+            return customerRepository.GetAll(name);
         }
     }
 }

@@ -107,6 +107,12 @@
     <Compile Include="dto\MerchantSaleSummary.cs" />
     <Compile Include="dto\PurchaseReport.cs" />
     <Compile Include="dto\DepotPurchaseDetails.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="model\Customer.cs" />
     <Compile Include="model\Depot.cs" />
     <Compile Include="dto\DepotPurchase.cs" />
@@ -120,7 +126,6 @@
     <Compile Include="repository\CustomerRepository.cs" />
     <Compile Include="repository\DepotRepository.cs" />
     <Compile Include="repository\MerchantRepository.cs" />
-    <Compile Include="repository\PurchaseReportRepository.cs" />
     <Compile Include="repository\SaleReportRepository.cs" />
     <Compile Include="service\CustomerService.cs" />
     <Compile Include="service\DepotPurchaseService.cs" />
@@ -128,20 +133,22 @@
     <Compile Include="service\DepotService.cs" />
     <Compile Include="service\FishSpeciesService.cs" />
     <Compile Include="service\MerchantService.cs" />
-    <Compile Include="service\PurchaseReportService.cs" />
     <Compile Include="service\SaleReportService.cs" />
+    <Compile Include="utilis\CustomMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="utilis\CustomMessageBox.Designer.cs">
+      <DependentUpon>CustomMessageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\DepotPurchaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="view\DepotPurchaseForm.Designer.cs">
       <DependentUpon>DepotPurchaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="view\DepotSalesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="view\DepotSalesForm.Designer.cs">
-      <DependentUpon>DepotSalesForm.cs</DependentUpon>
-    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -153,9 +160,6 @@
     </Compile>
     <EmbeddedResource Include="view\DepotPurchaseForm.resx">
       <DependentUpon>DepotPurchaseForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\DepotSalesForm.resx">
-      <DependentUpon>DepotSalesForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

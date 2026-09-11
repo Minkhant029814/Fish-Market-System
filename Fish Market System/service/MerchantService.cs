@@ -24,9 +24,9 @@ namespace Fish_Market_System.service
             return merchantRepository.GetAll();
         }
 
-        public List<MerchantSalesSummary> GetSalesByMerchantId(int merchantId)
+        public List<MerchantSalesSummary> GetSalesByMerchantId(int merchantId,DateTime date)
         {
-            return merchantRepository.GetSalesByMerchantId(merchantId);
+            return merchantRepository.GetSalesByMerchantIdAndDate(merchantId, date);
         }
     }
 }

@@ -26,14 +26,24 @@ namespace Fish_Market_System.repository
         }
 
 
-        public List<Customer> GetAll()
+        public List<Customer> GetAll(string customerName = null)
         {
             List<Customer> customers = new List<Customer>();
-            string query = @"Select customerId,customerName from customers";
+            string query = @"SELECT customerId, customerName FROM customers";
+            List<MySqlParameter> paramList = new List<MySqlParameter>();
+
+            // IsNullOrEmpty အစား IsNullOrWhiteSpace ပြောင်းသုံးပါ
+            if (!string.IsNullOrWhiteSpace(customerName))
+            {
+                query += " WHERE customerName LIKE @Name";
+                paramList.Add(new MySqlParameter("@Name", $"%{customerName.Trim()}%"));
+            }
+
+            query += " ORDER BY customerName";
 
             try
             {
-                using (DataTable dt = dbConn.GetData(query, null))
+                using (DataTable dt = dbConn.GetData(query, paramList.ToArray()))
                 {
                     if (dt != null && dt.Rows.Count > 0)
                     {
@@ -48,10 +58,11 @@ namespace Fish_Market_System.repository
                         }
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetAll: {ex.Message}");
-                throw; 
+                throw;
             }
 
             return customers;

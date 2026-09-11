@@ -50,62 +50,66 @@ namespace Fish_Market_System.repository
             return merchants;
         }
 
-        public List<MerchantSalesSummary> GetSalesByMerchantId(int merchantId)
+        public List<MerchantSalesSummary> GetSalesByMerchantIdAndDate(
+     int merchantId,
+     DateTime startDate
+     )
         {
             List<MerchantSalesSummary> resultList = new List<MerchantSalesSummary>();
-            string query = @"
-            SELECT 
-                c.customerName AS CustomerName,
-                f.speciesName AS FishName,
-                s.quantity AS Quantity,
-                s.Sellprice AS Amount,
-                s.totalsellAmount AS TotalAmount,
-                s.paymentType AS PaymentType
-            FROM depotpurchases p
-            JOIN depotsales s 
-                ON p.depotId = s.depotId 
-               AND p.speciesId = s.speciesId
-            JOIN customers c 
-                ON s.customerId = c.customerId
-            JOIN fishspecies f 
-                ON s.speciesId = f.speciesId
-            WHERE p.merchantId = @MerchantId;";
 
-            MySqlParameter[] ps =
+            string query = @"
+        SELECT 
+            c.customerName AS CustomerName,
+            f.speciesName AS FishName,
+            dp.quantity AS Quantity,
+            dp.buyprice AS Amount,
+            dp.TotalBuyAmount AS TotalAmount,
+            dp.paymentType AS PaymentType,
+            dp.purchaseDate AS PurchaseDate
+        FROM depotpurchases dp
+        INNER JOIN customers c ON dp.customerId = c.customerId
+        INNER JOIN fishspecies f ON dp.speciesId = f.speciesId
+        WHERE dp.merchantId = @MerchantId
+            AND dp.purchaseDate = @StartDate 
+        ORDER BY dp.purchaseDate DESC";
+
+            MySqlParameter[] ps = new MySqlParameter[]
             {
-                new MySqlParameter("@MerchantId",merchantId)
+        new MySqlParameter("@MerchantId", merchantId),
+        new MySqlParameter("@StartDate", startDate),
+       
             };
+
             try
             {
-                using(DataTable dt = dbConn.GetData(query, ps))
+                using (DataTable dt = dbConn.GetData(query, ps))
                 {
-                    if(dt != null && dt.Rows.Count > 0)
+                    if (dt != null && dt.Rows.Count > 0)
                     {
-                        foreach(DataRow row in dt.Rows)
+                        foreach (DataRow row in dt.Rows)
                         {
-                            MerchantSalesSummary list = new MerchantSalesSummary
+                            MerchantSalesSummary summary = new MerchantSalesSummary
                             {
-                                CustomerName = row["CustomerName"].ToString(),
-                                FishName = row["FishName"].ToString(),
-                                Quantity = Convert.ToDecimal(row["Quantity"]),
-                                Amount = Convert.ToDecimal(row["Amount"]),
-                                TotalAmount = Convert.ToDecimal(row["TotalAmount"]),
-                                PaymentType = row["PaymentType"].ToString()
+                                CustomerName = row["CustomerName"]?.ToString() ?? "",
+                                FishName = row["FishName"]?.ToString() ?? "",
+                                Quantity = row["Quantity"] != DBNull.Value ? Convert.ToDecimal(row["Quantity"]) : 0,
+                                Amount = row["Amount"] != DBNull.Value ? Convert.ToDecimal(row["Amount"]) : 0,
+                                TotalAmount = row["TotalAmount"] != DBNull.Value ? Convert.ToDecimal(row["TotalAmount"]) : 0,
+                                PaymentType = row["PaymentType"]?.ToString() ?? "cash",
+                                //PurchaseDate = row["PurchaseDate"] != DBNull.Value ? Convert.ToDateTime(row["PurchaseDate"]) : DateTime.Now
                             };
 
-                            resultList.Add(list);
+                            resultList.Add(summary);
                         }
                     }
                 }
 
                 return resultList;
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-
-                throw new Exception("Something went wrong to fetch data");
+                Console.WriteLine($"Error in GetSalesByMerchantIdAndDate: {ex.Message}");
+                throw new Exception("ဒေတာရယူရာတွင် အမှားအယွင်းဖြစ်ပွားခဲ့သည်။", ex);
             }
         }
     }
