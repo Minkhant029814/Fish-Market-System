@@ -106,12 +106,6 @@
     <Compile Include="dto\DepotStock.cs" />
     <Compile Include="dto\MerchantSaleSummary.cs" />
     <Compile Include="dto\PurchaseReport.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="dto\DepotPurchaseDetails.cs" />
     <Compile Include="model\Customer.cs" />
     <Compile Include="model\Depot.cs" />
@@ -148,9 +142,6 @@
     <Compile Include="view\DepotSalesForm.Designer.cs">
       <DependentUpon>DepotSalesForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

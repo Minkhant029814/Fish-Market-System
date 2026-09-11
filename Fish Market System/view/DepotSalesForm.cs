@@ -17,6 +17,7 @@ namespace Fish_Market_System.view
     {
         private readonly string CustomerName;
         private readonly int CustomerId;
+        private readonly List<Merchant> merchants;
         private readonly List<Depot> Depots;
         private readonly List<FishSpecies> Fishes; // ✅ ထားပါ
         private readonly DepotSaleService saleService = new DepotSaleService();
@@ -24,11 +25,12 @@ namespace Fish_Market_System.view
         private int DepotId;
 
         // ✅ Constructor မှာ Fishes ကိုပါလက်ခံပါ
-        public DepotSalesForm(int cId, string cName, List<Depot> ds, List<FishSpecies> fs)
+        public DepotSalesForm(int cId, string cName,List<Merchant> ms, List<Depot> ds, List<FishSpecies> fs)
         {
             InitializeComponent();
             this.CustomerId = cId;
             this.CustomerName = cName;
+            this.merchants = ms;
             this.Depots = ds;
             this.Fishes = fs; // ✅ Fishes ကို သိမ်းပါ
             DisplayData();
@@ -47,6 +49,11 @@ namespace Fish_Market_System.view
                 cmbDepot.Items.Add(depot);
             }
 
+            foreach(Merchant mechant in merchants)
+            {
+                cmbMerchants.Items.Add(mechant);
+            }
+
             // ✅ Fishes က Null မဖြစ်အောင် စစ်ပါ
             if (Fishes != null)
             {
@@ -59,12 +66,18 @@ namespace Fish_Market_System.view
             // DisplayMember နဲ့ ValueMember သတ်မှတ်ပါ
             cmbDepot.DisplayMember = "DepotName";
             cmbDepot.ValueMember = "DepotId";
+            cmbMerchants.DisplayMember = "MerchantName";
+            cmbMerchants.ValueMember = "MerchantId";
             cmbFishes.DisplayMember = "FishSpeciesName";
             cmbFishes.ValueMember = "FishSpeciesId";
 
             if (cmbDepot.Items.Count > 0)
             {
                 cmbDepot.SelectedIndex = 0;
+            }
+            if(cmbMerchants.Items.Count > 0)
+            {
+                cmbMerchants.SelectedIndex = 0;
             }
 
             if (cmbFishes.Items.Count > 0)
@@ -83,9 +96,9 @@ namespace Fish_Market_System.view
         private void LoadPaymentTypes()
         {
             cmbPaymentType.Items.Clear();
-            cmbPaymentType.Items.Add("CASH");
-            cmbPaymentType.Items.Add("CREDIT");
-            cmbPaymentType.Items.Add("DELIVERY");
+            cmbPaymentType.Items.Add("လက်ငင်း");
+            cmbPaymentType.Items.Add("အကြွေး");
+            //cmbPaymentType.Items.Add("DELIVERY");
 
             if (cmbPaymentType.Items.Count > 0)
             {
@@ -226,6 +239,7 @@ namespace Fish_Market_System.view
                 // ၂။ Object တွေကို ပြန်ယူပါ
                 Depot selectedDepot = (Depot)cmbDepot.SelectedItem;
                 FishSpecies selectedFish = (FishSpecies)cmbFishes.SelectedItem;
+                Merchant seletctedMerchant = (Merchant)cmbMerchants.SelectedItem;
                 DepotId = selectedDepot.DepotId;
 
                 // ၃။ Stock စစ်ဆေးပါ
@@ -239,6 +253,8 @@ namespace Fish_Market_System.view
                 if (speciesStocks != null)
                 {
                     var speciesStock = speciesStocks.FirstOrDefault(f => f.FishName == selectedFish.FishSpeciesName);
+
+                   
                     if (speciesStock != null)
                     {
                         availableForSpecies = speciesStock.TotalQuantity;
@@ -252,25 +268,31 @@ namespace Fish_Market_System.view
                     return;
                 }
                 
-                string paymentType = cmbPaymentType.SelectedItem?.ToString() ?? "CASH";
+                string paymentType = cmbPaymentType.SelectedItem?.ToString() ?? "လက်ငင်း";
 
                
-                if (paymentType == "DELIVERY")
+
+                if (paymentType == "လက်ငင်း")
                 {
-                    paymentType = "deli"; 
+                    paymentType = "cash"; 
+                }
+                else if (paymentType == "အကြွေး")
+                {
+                    paymentType = "credit";
                 }
 
-                // ၄။ Sale Object ဆောက်ပါ
-                DepotSale sale = new DepotSale
-                {
-                    CustomerId = this.CustomerId,
-                    DepotId = selectedDepot.DepotId,
-                    SpeciesId = selectedFish.FishSpeciesId,
-                    Quantity = quantity,
-                    SellPrice = Convert.ToDecimal(txtPrice.Text),
-                    PaymentType = paymentType, // ပြောင်းထားတဲ့တန်ဖိုးကိုသုံးပါ
-                    SaleDate = DateTime.Now
-                };
+                    // ၄။ Sale Object ဆောက်ပါ
+                    DepotSale sale = new DepotSale
+                    {
+                        CustomerId = this.CustomerId,
+                        DepotId = selectedDepot.DepotId,
+                        MerchantId = seletctedMerchant.MerchantId,
+                        SpeciesId = selectedFish.FishSpeciesId,
+                        Quantity = quantity,
+                        SellPrice = Convert.ToDecimal(txtPrice.Text),
+                        PaymentType = paymentType, // ပြောင်းထားတဲ့တန်ဖိုးကိုသုံးပါ
+                        SaleDate = DateTime.Now
+                    };
 
                 MessageBox.Show("Selected item is " + sale.PaymentType);
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Fish_Market_System.database
 {
@@ -35,14 +36,23 @@ namespace Fish_Market_System.database
         {
             using (MySqlConnection conn = new MySqlConnection(connection))
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                if (parameters != null) cmd.Parameters.AddRange(parameters);
+                try
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    if (parameters != null) cmd.Parameters.AddRange(parameters);
 
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                return dt;
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    throw;
+                }
 
             }
         }

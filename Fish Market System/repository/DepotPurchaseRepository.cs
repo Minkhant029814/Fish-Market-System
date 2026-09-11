@@ -18,80 +18,38 @@ namespace Fish_Market_System.repository
 
         public bool AddPurchase(DepotPurchase purchase)
         {
-            MySqlConnection conn = null;
-            MySqlTransaction transaction = null;
-
             try
             {
-                conn = dbConn.GetConnection();
-                conn.Open();
-                transaction = conn.BeginTransaction();
+                // Query တစ်ခုတည်း
+                string query = @"
+            INSERT INTO depotpurchases 
+                (depotId, merchantId, customerId, speciesId, quantity, buyprice,paymentType, purchaseDate)
+            VALUES 
+                (@dId, @mId, @cId, @sId, @q, @price,@payment, @pDate)";
 
-                // ၁။ DepotPurchases ထဲထည့်ပါ
-                string insertPurchaseQuery = @"INSERT INTO depotpurchases 
-                                        (depotId, merchantId, speciesId, quantity, 
-                                         buyprice, purchaseDate)
-                                        VALUES 
-                                        (@dId, @mId, @sId, @q, @price, @pDate);
-                                        SELECT LAST_INSERT_ID();";
-
-                using (MySqlCommand cmd = new MySqlCommand(insertPurchaseQuery, conn, transaction))
+                MySqlParameter[] ps = new MySqlParameter[]
                 {
-                    cmd.Parameters.AddWithValue("@dId", purchase.DepotId);
-                    cmd.Parameters.AddWithValue("@mId", purchase.MerchantId);
-                    cmd.Parameters.AddWithValue("@sId", purchase.SpeciesId);
-                    cmd.Parameters.AddWithValue("@q", purchase.Quantity);
-                    cmd.Parameters.AddWithValue("@price", purchase.Price);
-                    cmd.Parameters.AddWithValue("@pDate", purchase.PurchaseDate);
+            new MySqlParameter("@dId", purchase.DepotId),
+            new MySqlParameter("@mId", purchase.MerchantId),
+            new MySqlParameter("@cId",purchase.CustomerId),
+            new MySqlParameter("@sId", purchase.SpeciesId),
+            new MySqlParameter("@q", purchase.Quantity),
+            new MySqlParameter("@price", purchase.Price),
+            new MySqlParameter("@payment",purchase.PaymentType),
+            new MySqlParameter("@pDate", purchase.PurchaseDate)
+                };
 
-                    int purchaseId = Convert.ToInt32(cmd.ExecuteScalar());
+                List<string> queries = new List<string> { query };
+                List<MySqlParameter[]> paramList = new List<MySqlParameter[]> { ps };
 
-                    // ၂။ Inventory Transaction ထည့်ပါ (IN)
-                    string insertTransactionQuery = @"INSERT INTO inventory_transactions 
-                                               (depotId, speciesId, transactionType, 
-                                                referenceId, referenceType, quantity, transactionDate)
-                                               VALUES 
-                                               (@dId, @sId, 'IN', @refId, 'PURCHASE', @q, @pDate)";
-
-                    using (MySqlCommand transCmd = new MySqlCommand(insertTransactionQuery, conn, transaction))
-                    {
-                        transCmd.Parameters.AddWithValue("@dId", purchase.DepotId);
-                        transCmd.Parameters.AddWithValue("@sId", purchase.SpeciesId);
-                        transCmd.Parameters.AddWithValue("@q", purchase.Quantity);
-                        transCmd.Parameters.AddWithValue("@refId", purchaseId);
-                        transCmd.Parameters.AddWithValue("@pDate", purchase.PurchaseDate);
-                        transCmd.ExecuteNonQuery();
-                    }
-
-                    // ၃။ Current Stock ကို Update လုပ်ပါ (ပေါင်း)
-                    string updateStockQuery = @"INSERT INTO current_stock (depotId, speciesId, quantity)
-                                        VALUES (@dId, @sId, @q)
-                                        ON DUPLICATE KEY UPDATE quantity = quantity + @q";
-
-                    using (MySqlCommand stockCmd = new MySqlCommand(updateStockQuery, conn, transaction))
-                    {
-                        stockCmd.Parameters.AddWithValue("@dId", purchase.DepotId);
-                        stockCmd.Parameters.AddWithValue("@sId", purchase.SpeciesId);
-                        stockCmd.Parameters.AddWithValue("@q", purchase.Quantity);
-                        stockCmd.ExecuteNonQuery();
-                    }
-
-                    transaction.Commit();
-                    return true;
-                }
+                return dbConn.ExecuteTransaction(queries, paramList);
             }
             catch (Exception ex)
             {
-                transaction?.Rollback();
                 Console.WriteLine($"Error in AddPurchase: {ex.Message}");
                 throw;
             }
-            finally
-            {
-                conn?.Close();
-            }
         }
-
         public List<DepotPurchaseDetails> GetPurchaseByMerchantId(int merchantId)
         {
             List<DepotPurchaseDetails> purchases = new List<DepotPurchaseDetails>();
@@ -101,11 +59,11 @@ namespace Fish_Market_System.repository
                     dp.quantity AS Quantity,
                     dp.buyprice AS Buyprice,
                     dp.totalBuyAmount AS TotalAmount,
-                    d.depotName,
-                    dp.purchaseDate AS purchaseDate
+                    c.CustomerName,
+                    dp.paymentType
                 FROM depotpurchases dp
                 INNER JOIN fishSpecies fs ON dp.speciesId = fs.speciesId
-                INNER JOIN Depots d ON d.depotId = dp.depotId
+                INNER JOIN Customers c ON c.customerId = dp.customerId
                 WHERE dp.merchantId = @MerchantId
                 ORDER BY dp.purchaseDate DESC";
 
@@ -128,8 +86,9 @@ namespace Fish_Market_System.repository
                                 Quantity = Convert.ToDecimal(row["Quantity"]),
                                 BuyPrice = Convert.ToDecimal(row["Buyprice"]),
                                 TotalBuyAmount = Convert.ToDecimal(row["TotalAmount"]),
-                                DepotName = row["depotName"].ToString(),
-                                PurchaseDate = Convert.ToDateTime(row["PurchaseDate"])
+                                CustomerName = row["CustomerName"].ToString(),
+                                PaymentType = row["PaymentType"].ToString()
+
 
                             };
 

@@ -10,6 +10,8 @@ namespace Fish_Market_System.dto
     {
         public int CustomerId { get; set; }
         public int DepotId { get; set; }
+
+        public int MerchantId { get; set; }
         public int SpeciesId { get; set; }
 
         public decimal SellPrice { get; set; }

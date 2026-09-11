@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fish_Market_System.model
 {
-    internal class Customer
+    public class Customer
     {
 
         public int CustomerId { get; set; }
