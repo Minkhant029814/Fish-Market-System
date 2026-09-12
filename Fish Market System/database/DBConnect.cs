@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Fish_Market_System.utilis;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -50,7 +51,8 @@ namespace Fish_Market_System.database
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    CustomMessageBox.Show(ex.Message ,"သတိပေးချက်", CustomMessageBox.MessageType.Error);
+                    
                     throw;
                 }
 

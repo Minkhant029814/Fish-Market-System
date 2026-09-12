@@ -31,6 +31,19 @@ namespace Fish_Market_System
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -39,11 +52,6 @@ namespace Fish_Market_System
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
             this.guna2TabControl1 = new Guna.UI2.WinForms.Guna2TabControl();
             this.merchantPage = new System.Windows.Forms.TabPage();
             this.lblMerchantCounts = new System.Windows.Forms.Label();
@@ -72,9 +80,10 @@ namespace Fish_Market_System
             this.txtFishName = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.lblReportTotalAmount = new System.Windows.Forms.Label();
-            this.lblSelectedCustomer = new System.Windows.Forms.Label();
+            this.notePanel = new Guna.UI2.WinForms.Guna2Panel();
             this.lblReportTotalQty = new System.Windows.Forms.Label();
+            this.lblReportTotalCount = new System.Windows.Forms.Label();
+            this.lblReportTotalAmount = new System.Windows.Forms.Label();
             this.reportTabControl = new Guna.UI2.WinForms.Guna2TabControl();
             this.CashPage = new System.Windows.Forms.TabPage();
             this.dgvCash = new Guna.UI2.WinForms.Guna2DataGridView();
@@ -92,9 +101,9 @@ namespace Fish_Market_System
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblReportTotalCount = new System.Windows.Forms.Label();
             this.headerPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.txtSearchBox = new Guna.UI2.WinForms.Guna2TextBox();
+            this.lblSelectedCustomer = new System.Windows.Forms.Label();
             this.lblClientCounts = new System.Windows.Forms.Label();
             this.ClientPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage6 = new System.Windows.Forms.TabPage();
@@ -128,7 +137,25 @@ namespace Fish_Market_System
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
             this.lblTotalCashSales = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.notePanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.bodyPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.dgvMerchantSummary = new Guna.UI2.WinForms.Guna2DataGridView();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvPurchaseDetails = new Guna.UI2.WinForms.Guna2DataGridView();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.guna2Panel9 = new Guna.UI2.WinForms.Guna2Panel();
+            this.dtpReportDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblSummaryTotal = new System.Windows.Forms.Label();
+            this.lblDetailTotal = new System.Windows.Forms.Label();
             this.guna2TabControl1.SuspendLayout();
             this.merchantPage.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
@@ -139,6 +166,7 @@ namespace Fish_Market_System
             this.tabPage4.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.notePanel.SuspendLayout();
             this.reportTabControl.SuspendLayout();
             this.CashPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCash)).BeginInit();
@@ -156,27 +184,31 @@ namespace Fish_Market_System
             this.tableLayoutPanel1.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
             this.guna2Panel5.SuspendLayout();
-            this.notePanel.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.bodyPanel.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMerchantSummary)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPurchaseDetails)).BeginInit();
+            this.guna2Panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2TabControl1
             // 
             this.guna2TabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.guna2TabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2TabControl1.Controls.Add(this.merchantPage);
             this.guna2TabControl1.Controls.Add(this.tabPage2);
             this.guna2TabControl1.Controls.Add(this.tabPage3);
             this.guna2TabControl1.Controls.Add(this.tabPage4);
             this.guna2TabControl1.Controls.Add(this.tabPage5);
             this.guna2TabControl1.Controls.Add(this.tabPage6);
+            this.guna2TabControl1.Controls.Add(this.tabPage1);
+            this.guna2TabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2TabControl1.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2TabControl1.ItemSize = new System.Drawing.Size(250, 60);
-            this.guna2TabControl1.Location = new System.Drawing.Point(33, 32);
+            this.guna2TabControl1.Location = new System.Drawing.Point(0, 0);
             this.guna2TabControl1.Name = "guna2TabControl1";
             this.guna2TabControl1.SelectedIndex = 0;
-            this.guna2TabControl1.Size = new System.Drawing.Size(1382, 741);
+            this.guna2TabControl1.Size = new System.Drawing.Size(1613, 907);
             this.guna2TabControl1.TabButtonHoverState.BorderColor = System.Drawing.Color.Empty;
             this.guna2TabControl1.TabButtonHoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
             this.guna2TabControl1.TabButtonHoverState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
@@ -207,7 +239,7 @@ namespace Fish_Market_System
             this.merchantPage.Location = new System.Drawing.Point(254, 4);
             this.merchantPage.Name = "merchantPage";
             this.merchantPage.Padding = new System.Windows.Forms.Padding(3);
-            this.merchantPage.Size = new System.Drawing.Size(1124, 733);
+            this.merchantPage.Size = new System.Drawing.Size(1355, 899);
             this.merchantPage.TabIndex = 0;
             this.merchantPage.Text = "ကုန်သည်များ";
             // 
@@ -217,7 +249,7 @@ namespace Fish_Market_System
             this.lblMerchantCounts.AutoSize = true;
             this.lblMerchantCounts.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMerchantCounts.ForeColor = System.Drawing.Color.Black;
-            this.lblMerchantCounts.Location = new System.Drawing.Point(845, 272);
+            this.lblMerchantCounts.Location = new System.Drawing.Point(1127, 283);
             this.lblMerchantCounts.Name = "lblMerchantCounts";
             this.lblMerchantCounts.Size = new System.Drawing.Size(201, 36);
             this.lblMerchantCounts.TabIndex = 5;
@@ -231,7 +263,7 @@ namespace Fish_Market_System
             this.merchantPanel.AutoScroll = true;
             this.merchantPanel.Location = new System.Drawing.Point(22, 345);
             this.merchantPanel.Name = "merchantPanel";
-            this.merchantPanel.Size = new System.Drawing.Size(1052, 368);
+            this.merchantPanel.Size = new System.Drawing.Size(1306, 368);
             this.merchantPanel.TabIndex = 4;
             // 
             // label2
@@ -254,7 +286,7 @@ namespace Fish_Market_System
             this.guna2Panel1.Controls.Add(this.label1);
             this.guna2Panel1.Location = new System.Drawing.Point(32, 38);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(1042, 188);
+            this.guna2Panel1.Size = new System.Drawing.Size(1296, 188);
             this.guna2Panel1.TabIndex = 0;
             // 
             // btnAddMerchant
@@ -268,7 +300,7 @@ namespace Fish_Market_System
             this.btnAddMerchant.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
             this.btnAddMerchant.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddMerchant.ForeColor = System.Drawing.Color.White;
-            this.btnAddMerchant.Location = new System.Drawing.Point(782, 82);
+            this.btnAddMerchant.Location = new System.Drawing.Point(1036, 82);
             this.btnAddMerchant.Name = "btnAddMerchant";
             this.btnAddMerchant.Size = new System.Drawing.Size(186, 58);
             this.btnAddMerchant.TabIndex = 2;
@@ -311,7 +343,7 @@ namespace Fish_Market_System
             this.tabPage2.Location = new System.Drawing.Point(254, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1124, 733);
+            this.tabPage2.Size = new System.Drawing.Size(1355, 899);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "ဖောက်သည်များ";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -325,7 +357,7 @@ namespace Fish_Market_System
             this.guna2Panel2.Controls.Add(this.label3);
             this.guna2Panel2.Location = new System.Drawing.Point(26, 18);
             this.guna2Panel2.Name = "guna2Panel2";
-            this.guna2Panel2.Size = new System.Drawing.Size(1019, 188);
+            this.guna2Panel2.Size = new System.Drawing.Size(1310, 188);
             this.guna2Panel2.TabIndex = 1;
             // 
             // btnAddCustomers
@@ -339,7 +371,7 @@ namespace Fish_Market_System
             this.btnAddCustomers.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
             this.btnAddCustomers.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddCustomers.ForeColor = System.Drawing.Color.White;
-            this.btnAddCustomers.Location = new System.Drawing.Point(759, 82);
+            this.btnAddCustomers.Location = new System.Drawing.Point(1050, 82);
             this.btnAddCustomers.Name = "btnAddCustomers";
             this.btnAddCustomers.Size = new System.Drawing.Size(180, 45);
             this.btnAddCustomers.TabIndex = 2;
@@ -384,7 +416,7 @@ namespace Fish_Market_System
             this.tabPage3.Location = new System.Drawing.Point(254, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1124, 733);
+            this.tabPage3.Size = new System.Drawing.Size(1355, 899);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ဒိုင်";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -395,9 +427,9 @@ namespace Fish_Market_System
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FishStockPanel.AutoScroll = true;
             this.FishStockPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.FishStockPanel.Location = new System.Drawing.Point(542, 285);
+            this.FishStockPanel.Location = new System.Drawing.Point(622, 285);
             this.FishStockPanel.Name = "FishStockPanel";
-            this.FishStockPanel.Size = new System.Drawing.Size(481, 406);
+            this.FishStockPanel.Size = new System.Drawing.Size(725, 406);
             this.FishStockPanel.TabIndex = 6;
             this.FishStockPanel.WrapContents = false;
             // 
@@ -409,7 +441,7 @@ namespace Fish_Market_System
             this.depotPanel.AutoScroll = true;
             this.depotPanel.Location = new System.Drawing.Point(21, 285);
             this.depotPanel.Name = "depotPanel";
-            this.depotPanel.Size = new System.Drawing.Size(490, 414);
+            this.depotPanel.Size = new System.Drawing.Size(566, 414);
             this.depotPanel.TabIndex = 5;
             // 
             // guna2Panel3
@@ -421,7 +453,7 @@ namespace Fish_Market_System
             this.guna2Panel3.Controls.Add(this.label5);
             this.guna2Panel3.Location = new System.Drawing.Point(21, 17);
             this.guna2Panel3.Name = "guna2Panel3";
-            this.guna2Panel3.Size = new System.Drawing.Size(992, 188);
+            this.guna2Panel3.Size = new System.Drawing.Size(1326, 188);
             this.guna2Panel3.TabIndex = 1;
             // 
             // btnAddDepot
@@ -435,7 +467,7 @@ namespace Fish_Market_System
             this.btnAddDepot.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
             this.btnAddDepot.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddDepot.ForeColor = System.Drawing.Color.White;
-            this.btnAddDepot.Location = new System.Drawing.Point(732, 82);
+            this.btnAddDepot.Location = new System.Drawing.Point(1066, 82);
             this.btnAddDepot.Name = "btnAddDepot";
             this.btnAddDepot.Size = new System.Drawing.Size(180, 45);
             this.btnAddDepot.TabIndex = 2;
@@ -479,7 +511,7 @@ namespace Fish_Market_System
             this.tabPage4.Location = new System.Drawing.Point(254, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1124, 733);
+            this.tabPage4.Size = new System.Drawing.Size(1355, 899);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "ငါးအမျိုးစား";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -492,7 +524,7 @@ namespace Fish_Market_System
             this.fishPanel.AutoScroll = true;
             this.fishPanel.Location = new System.Drawing.Point(20, 258);
             this.fishPanel.Name = "fishPanel";
-            this.fishPanel.Size = new System.Drawing.Size(1067, 368);
+            this.fishPanel.Size = new System.Drawing.Size(1327, 368);
             this.fishPanel.TabIndex = 6;
             // 
             // guna2Panel4
@@ -504,7 +536,7 @@ namespace Fish_Market_System
             this.guna2Panel4.Controls.Add(this.label6);
             this.guna2Panel4.Location = new System.Drawing.Point(20, 18);
             this.guna2Panel4.Name = "guna2Panel4";
-            this.guna2Panel4.Size = new System.Drawing.Size(1067, 188);
+            this.guna2Panel4.Size = new System.Drawing.Size(1327, 188);
             this.guna2Panel4.TabIndex = 2;
             // 
             // btnAddNewFish
@@ -518,7 +550,7 @@ namespace Fish_Market_System
             this.btnAddNewFish.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
             this.btnAddNewFish.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddNewFish.ForeColor = System.Drawing.Color.White;
-            this.btnAddNewFish.Location = new System.Drawing.Point(807, 82);
+            this.btnAddNewFish.Location = new System.Drawing.Point(1067, 82);
             this.btnAddNewFish.Name = "btnAddNewFish";
             this.btnAddNewFish.Size = new System.Drawing.Size(180, 45);
             this.btnAddNewFish.TabIndex = 2;
@@ -563,10 +595,42 @@ namespace Fish_Market_System
             this.tabPage5.Location = new System.Drawing.Point(254, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1124, 733);
+            this.tabPage5.Size = new System.Drawing.Size(1355, 899);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "ဖောက်သည်စာရင်း";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // notePanel
+            // 
+            this.notePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.notePanel.BorderRadius = 15;
+            this.notePanel.Controls.Add(this.lblReportTotalQty);
+            this.notePanel.Controls.Add(this.lblReportTotalCount);
+            this.notePanel.Controls.Add(this.lblReportTotalAmount);
+            this.notePanel.Location = new System.Drawing.Point(22, 240);
+            this.notePanel.Name = "notePanel";
+            this.notePanel.Size = new System.Drawing.Size(1321, 122);
+            this.notePanel.TabIndex = 2;
+            // 
+            // lblReportTotalQty
+            // 
+            this.lblReportTotalQty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblReportTotalQty.AutoSize = true;
+            this.lblReportTotalQty.Location = new System.Drawing.Point(991, 19);
+            this.lblReportTotalQty.Name = "lblReportTotalQty";
+            this.lblReportTotalQty.Size = new System.Drawing.Size(165, 36);
+            this.lblReportTotalQty.TabIndex = 5;
+            this.lblReportTotalQty.Text = "ဖောက်သည်စာရင်း";
+            // 
+            // lblReportTotalCount
+            // 
+            this.lblReportTotalCount.AutoSize = true;
+            this.lblReportTotalCount.Location = new System.Drawing.Point(25, 67);
+            this.lblReportTotalCount.Name = "lblReportTotalCount";
+            this.lblReportTotalCount.Size = new System.Drawing.Size(165, 36);
+            this.lblReportTotalCount.TabIndex = 4;
+            this.lblReportTotalCount.Text = "ဖောက်သည်စာရင်း";
             // 
             // lblReportTotalAmount
             // 
@@ -576,27 +640,6 @@ namespace Fish_Market_System
             this.lblReportTotalAmount.Size = new System.Drawing.Size(165, 36);
             this.lblReportTotalAmount.TabIndex = 6;
             this.lblReportTotalAmount.Text = "ဖောက်သည်စာရင်း";
-            // 
-            // lblSelectedCustomer
-            // 
-            this.lblSelectedCustomer.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblSelectedCustomer.AutoSize = true;
-            this.lblSelectedCustomer.Font = new System.Drawing.Font("Myanmar Text", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedCustomer.Location = new System.Drawing.Point(413, 10);
-            this.lblSelectedCustomer.Name = "lblSelectedCustomer";
-            this.lblSelectedCustomer.Size = new System.Drawing.Size(232, 50);
-            this.lblSelectedCustomer.TabIndex = 3;
-            this.lblSelectedCustomer.Text = "ဖောက်သည်စာရင်း";
-            // 
-            // lblReportTotalQty
-            // 
-            this.lblReportTotalQty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblReportTotalQty.AutoSize = true;
-            this.lblReportTotalQty.Location = new System.Drawing.Point(753, 19);
-            this.lblReportTotalQty.Name = "lblReportTotalQty";
-            this.lblReportTotalQty.Size = new System.Drawing.Size(165, 36);
-            this.lblReportTotalQty.TabIndex = 5;
-            this.lblReportTotalQty.Text = "ဖောက်သည်စာရင်း";
             // 
             // reportTabControl
             // 
@@ -609,7 +652,7 @@ namespace Fish_Market_System
             this.reportTabControl.Location = new System.Drawing.Point(22, 381);
             this.reportTabControl.Name = "reportTabControl";
             this.reportTabControl.SelectedIndex = 0;
-            this.reportTabControl.Size = new System.Drawing.Size(1083, 346);
+            this.reportTabControl.Size = new System.Drawing.Size(1321, 346);
             this.reportTabControl.TabButtonHoverState.BorderColor = System.Drawing.Color.Empty;
             this.reportTabControl.TabButtonHoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
             this.reportTabControl.TabButtonHoverState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
@@ -637,26 +680,26 @@ namespace Fish_Market_System
             this.CashPage.Location = new System.Drawing.Point(4, 44);
             this.CashPage.Name = "CashPage";
             this.CashPage.Padding = new System.Windows.Forms.Padding(3);
-            this.CashPage.Size = new System.Drawing.Size(1075, 298);
+            this.CashPage.Size = new System.Drawing.Size(1313, 298);
             this.CashPage.TabIndex = 0;
             this.CashPage.Text = "လက်ငင်း";
             this.CashPage.UseVisualStyleBackColor = true;
             // 
             // dgvCash
             // 
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
-            this.dgvCash.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.dgvCash.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCash.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(168)))), ((int)(((byte)(92)))));
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCash.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(168)))), ((int)(((byte)(92)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCash.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCash.ColumnHeadersHeight = 32;
             this.dgvCash.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.dgvCash.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -666,21 +709,21 @@ namespace Fish_Market_System
             this.price,
             this.amount,
             this.date});
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCash.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCash.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCash.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvCash.Location = new System.Drawing.Point(18, 29);
             this.dgvCash.Name = "dgvCash";
             this.dgvCash.RowHeadersVisible = false;
             this.dgvCash.RowHeadersWidth = 51;
             this.dgvCash.RowTemplate.Height = 24;
-            this.dgvCash.Size = new System.Drawing.Size(1027, 230);
+            this.dgvCash.Size = new System.Drawing.Size(1265, 230);
             this.dgvCash.TabIndex = 0;
             this.dgvCash.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvCash.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(168)))), ((int)(((byte)(92)))));
@@ -731,26 +774,26 @@ namespace Fish_Market_System
             this.CreditPage.Location = new System.Drawing.Point(4, 44);
             this.CreditPage.Name = "CreditPage";
             this.CreditPage.Padding = new System.Windows.Forms.Padding(3);
-            this.CreditPage.Size = new System.Drawing.Size(1075, 298);
+            this.CreditPage.Size = new System.Drawing.Size(1313, 298);
             this.CreditPage.TabIndex = 1;
             this.CreditPage.Text = "အကြွေး";
             this.CreditPage.UseVisualStyleBackColor = true;
             // 
             // dvgCredit
             // 
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
-            this.dvgCredit.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.dvgCredit.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dvgCredit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(111)))), ((int)(((byte)(81)))));
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.Orange;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dvgCredit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(111)))), ((int)(((byte)(81)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Orange;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dvgCredit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dvgCredit.ColumnHeadersHeight = 32;
             this.dvgCredit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.dvgCredit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -760,21 +803,21 @@ namespace Fish_Market_System
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6});
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dvgCredit.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dvgCredit.DefaultCellStyle = dataGridViewCellStyle6;
             this.dvgCredit.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dvgCredit.Location = new System.Drawing.Point(24, 34);
             this.dvgCredit.Name = "dvgCredit";
             this.dvgCredit.RowHeadersVisible = false;
             this.dvgCredit.RowHeadersWidth = 51;
             this.dvgCredit.RowTemplate.Height = 24;
-            this.dvgCredit.Size = new System.Drawing.Size(1027, 242);
+            this.dvgCredit.Size = new System.Drawing.Size(1265, 242);
             this.dvgCredit.TabIndex = 1;
             this.dvgCredit.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dvgCredit.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(111)))), ((int)(((byte)(81)))));
@@ -819,15 +862,6 @@ namespace Fish_Market_System
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
-            // lblReportTotalCount
-            // 
-            this.lblReportTotalCount.AutoSize = true;
-            this.lblReportTotalCount.Location = new System.Drawing.Point(25, 67);
-            this.lblReportTotalCount.Name = "lblReportTotalCount";
-            this.lblReportTotalCount.Size = new System.Drawing.Size(165, 36);
-            this.lblReportTotalCount.TabIndex = 4;
-            this.lblReportTotalCount.Text = "ဖောက်သည်စာရင်း";
-            // 
             // headerPanel
             // 
             this.headerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -838,7 +872,7 @@ namespace Fish_Market_System
             this.headerPanel.Controls.Add(this.ClientPanel);
             this.headerPanel.Location = new System.Drawing.Point(22, 29);
             this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(1083, 205);
+            this.headerPanel.Size = new System.Drawing.Size(1317, 205);
             this.headerPanel.TabIndex = 0;
             // 
             // txtSearchBox
@@ -864,11 +898,22 @@ namespace Fish_Market_System
             this.txtSearchBox.TabIndex = 3;
             this.txtSearchBox.TextChanged += new System.EventHandler(this.txtSearchBox_TextChanged);
             // 
+            // lblSelectedCustomer
+            // 
+            this.lblSelectedCustomer.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblSelectedCustomer.AutoSize = true;
+            this.lblSelectedCustomer.Font = new System.Drawing.Font("Myanmar Text", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectedCustomer.Location = new System.Drawing.Point(530, 10);
+            this.lblSelectedCustomer.Name = "lblSelectedCustomer";
+            this.lblSelectedCustomer.Size = new System.Drawing.Size(232, 50);
+            this.lblSelectedCustomer.TabIndex = 3;
+            this.lblSelectedCustomer.Text = "ဖောက်သည်စာရင်း";
+            // 
             // lblClientCounts
             // 
             this.lblClientCounts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblClientCounts.AutoSize = true;
-            this.lblClientCounts.Location = new System.Drawing.Point(814, 10);
+            this.lblClientCounts.Location = new System.Drawing.Point(1048, 10);
             this.lblClientCounts.Name = "lblClientCounts";
             this.lblClientCounts.Size = new System.Drawing.Size(165, 36);
             this.lblClientCounts.TabIndex = 2;
@@ -883,7 +928,7 @@ namespace Fish_Market_System
             this.ClientPanel.BackColor = System.Drawing.Color.White;
             this.ClientPanel.Location = new System.Drawing.Point(22, 71);
             this.ClientPanel.Name = "ClientPanel";
-            this.ClientPanel.Size = new System.Drawing.Size(1017, 116);
+            this.ClientPanel.Size = new System.Drawing.Size(1251, 116);
             this.ClientPanel.TabIndex = 1;
             // 
             // tabPage6
@@ -897,7 +942,7 @@ namespace Fish_Market_System
             this.tabPage6.ForeColor = System.Drawing.Color.Black;
             this.tabPage6.Location = new System.Drawing.Point(254, 4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1124, 733);
+            this.tabPage6.Size = new System.Drawing.Size(1355, 899);
             this.tabPage6.TabIndex = 6;
             this.tabPage6.Text = "ကုန်သည်အရောင်းစာရင်း";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -912,7 +957,7 @@ namespace Fish_Market_System
             this.dtpStartDate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpStartDate.ForeColor = System.Drawing.Color.White;
             this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.dtpStartDate.Location = new System.Drawing.Point(725, 22);
+            this.dtpStartDate.Location = new System.Drawing.Point(1029, 22);
             this.dtpStartDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.dtpStartDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.dtpStartDate.Name = "dtpStartDate";
@@ -928,7 +973,7 @@ namespace Fish_Market_System
             this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(536, 38);
+            this.label21.Location = new System.Drawing.Point(857, 38);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(137, 36);
             this.label21.TabIndex = 4;
@@ -945,7 +990,7 @@ namespace Fish_Market_System
             this.saleSummaryControlTab.Location = new System.Drawing.Point(17, 279);
             this.saleSummaryControlTab.Name = "saleSummaryControlTab";
             this.saleSummaryControlTab.SelectedIndex = 0;
-            this.saleSummaryControlTab.Size = new System.Drawing.Size(1082, 425);
+            this.saleSummaryControlTab.Size = new System.Drawing.Size(1313, 425);
             this.saleSummaryControlTab.TabButtonHoverState.BorderColor = System.Drawing.Color.Empty;
             this.saleSummaryControlTab.TabButtonHoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(70)))));
             this.saleSummaryControlTab.TabButtonHoverState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
@@ -972,7 +1017,7 @@ namespace Fish_Market_System
             this.tabPage7.Location = new System.Drawing.Point(4, 44);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(1074, 377);
+            this.tabPage7.Size = new System.Drawing.Size(1305, 377);
             this.tabPage7.TabIndex = 0;
             this.tabPage7.Text = "လက်ငင်းစာရင်း";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -988,24 +1033,24 @@ namespace Fish_Market_System
             this.guna2Panel7.FillColor = System.Drawing.Color.White;
             this.guna2Panel7.Location = new System.Drawing.Point(9, 24);
             this.guna2Panel7.Name = "guna2Panel7";
-            this.guna2Panel7.Size = new System.Drawing.Size(1046, 347);
+            this.guna2Panel7.Size = new System.Drawing.Size(1277, 347);
             this.guna2Panel7.TabIndex = 0;
             // 
             // dgvCashSales
             // 
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
-            this.dgvCashSales.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            this.dgvCashSales.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvCashSales.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(168)))), ((int)(((byte)(92)))));
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.Green;
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCashSales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(168)))), ((int)(((byte)(92)))));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Green;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCashSales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvCashSales.ColumnHeadersHeight = 32;
             this.dgvCashSales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.dgvCashSales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1014,21 +1059,21 @@ namespace Fish_Market_System
             this.Column4,
             this.Column3,
             this.Column5});
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCashSales.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCashSales.DefaultCellStyle = dataGridViewCellStyle9;
             this.dgvCashSales.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvCashSales.Location = new System.Drawing.Point(21, 75);
             this.dgvCashSales.Name = "dgvCashSales";
             this.dgvCashSales.RowHeadersVisible = false;
             this.dgvCashSales.RowHeadersWidth = 51;
             this.dgvCashSales.RowTemplate.Height = 24;
-            this.dgvCashSales.Size = new System.Drawing.Size(1006, 252);
+            this.dgvCashSales.Size = new System.Drawing.Size(1237, 252);
             this.dgvCashSales.TabIndex = 6;
             this.dgvCashSales.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvCashSales.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(168)))), ((int)(((byte)(92)))));
@@ -1084,7 +1129,7 @@ namespace Fish_Market_System
             this.tabPage8.Location = new System.Drawing.Point(4, 44);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(1074, 377);
+            this.tabPage8.Size = new System.Drawing.Size(1305, 377);
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "အကြွေးစာရင်း";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1100,24 +1145,24 @@ namespace Fish_Market_System
             this.guna2Panel8.FillColor = System.Drawing.Color.White;
             this.guna2Panel8.Location = new System.Drawing.Point(14, 15);
             this.guna2Panel8.Name = "guna2Panel8";
-            this.guna2Panel8.Size = new System.Drawing.Size(1046, 347);
+            this.guna2Panel8.Size = new System.Drawing.Size(1277, 347);
             this.guna2Panel8.TabIndex = 1;
             // 
             // dgvCreditSales
             // 
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.White;
-            this.dgvCreditSales.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
+            this.dgvCreditSales.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvCreditSales.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(111)))), ((int)(((byte)(81)))));
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.Orange;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCreditSales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(111)))), ((int)(((byte)(81)))));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.Orange;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCreditSales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.dgvCreditSales.ColumnHeadersHeight = 32;
             this.dgvCreditSales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.dgvCreditSales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1126,29 +1171,29 @@ namespace Fish_Market_System
             this.dataGridViewTextBoxColumn15,
             this.dataGridViewTextBoxColumn16,
             this.dataGridViewTextBoxColumn17});
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCreditSales.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCreditSales.DefaultCellStyle = dataGridViewCellStyle12;
             this.dgvCreditSales.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvCreditSales.Location = new System.Drawing.Point(21, 75);
             this.dgvCreditSales.Name = "dgvCreditSales";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.Color.Red;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCreditSales.RowHeadersDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCreditSales.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dgvCreditSales.RowHeadersVisible = false;
             this.dgvCreditSales.RowHeadersWidth = 51;
             this.dgvCreditSales.RowTemplate.Height = 24;
-            this.dgvCreditSales.Size = new System.Drawing.Size(1006, 252);
+            this.dgvCreditSales.Size = new System.Drawing.Size(1237, 252);
             this.dgvCreditSales.TabIndex = 6;
             this.dgvCreditSales.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvCreditSales.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(111)))), ((int)(((byte)(81)))));
@@ -1241,7 +1286,7 @@ namespace Fish_Market_System
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 132F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1078, 152);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1313, 152);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // guna2Panel6
@@ -1252,10 +1297,10 @@ namespace Fish_Market_System
             this.guna2Panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel6.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(111)))), ((int)(((byte)(81)))));
             this.guna2Panel6.ForeColor = System.Drawing.Color.Black;
-            this.guna2Panel6.Location = new System.Drawing.Point(549, 13);
+            this.guna2Panel6.Location = new System.Drawing.Point(666, 13);
             this.guna2Panel6.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.guna2Panel6.Name = "guna2Panel6";
-            this.guna2Panel6.Size = new System.Drawing.Size(516, 126);
+            this.guna2Panel6.Size = new System.Drawing.Size(634, 126);
             this.guna2Panel6.TabIndex = 1;
             // 
             // lblTotalCreditSales
@@ -1291,7 +1336,7 @@ namespace Fish_Market_System
             this.guna2Panel5.Location = new System.Drawing.Point(13, 13);
             this.guna2Panel5.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.guna2Panel5.Name = "guna2Panel5";
-            this.guna2Panel5.Size = new System.Drawing.Size(516, 126);
+            this.guna2Panel5.Size = new System.Drawing.Size(633, 126);
             this.guna2Panel5.TabIndex = 0;
             // 
             // lblTotalCashSales
@@ -1316,24 +1361,282 @@ namespace Fish_Market_System
             this.label12.TabIndex = 3;
             this.label12.Text = "လက်ငင်းရောင်းရငွေ";
             // 
-            // notePanel
+            // tabPage1
             // 
-            this.notePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabPage1.Controls.Add(this.bodyPanel);
+            this.tabPage1.Controls.Add(this.guna2Panel9);
+            this.tabPage1.Location = new System.Drawing.Point(254, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1355, 899);
+            this.tabPage1.TabIndex = 7;
+            this.tabPage1.Text = "ယနေ့စာရင်း";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // bodyPanel
+            // 
+            this.bodyPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.notePanel.BorderRadius = 15;
-            this.notePanel.Controls.Add(this.lblReportTotalQty);
-            this.notePanel.Controls.Add(this.lblReportTotalCount);
-            this.notePanel.Controls.Add(this.lblReportTotalAmount);
-            this.notePanel.Location = new System.Drawing.Point(22, 240);
-            this.notePanel.Name = "notePanel";
-            this.notePanel.Size = new System.Drawing.Size(1083, 122);
-            this.notePanel.TabIndex = 2;
+            this.bodyPanel.Controls.Add(this.lblDetailTotal);
+            this.bodyPanel.Controls.Add(this.lblSummaryTotal);
+            this.bodyPanel.Controls.Add(this.tableLayoutPanel2);
+            this.bodyPanel.FillColor = System.Drawing.Color.White;
+            this.bodyPanel.Location = new System.Drawing.Point(0, 139);
+            this.bodyPanel.Name = "bodyPanel";
+            this.bodyPanel.Size = new System.Drawing.Size(1352, 760);
+            this.bodyPanel.TabIndex = 1;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Controls.Add(this.dgvMerchantSummary, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.dgvPurchaseDetails, 0, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(24, 159);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1310, 580);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // dgvMerchantSummary
+            // 
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
+            this.dgvMerchantSummary.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMerchantSummary.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            this.dgvMerchantSummary.ColumnHeadersHeight = 38;
+            this.dgvMerchantSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            this.dgvMerchantSummary.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column6,
+            this.Column7,
+            this.Column8});
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMerchantSummary.DefaultCellStyle = dataGridViewCellStyle16;
+            this.dgvMerchantSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMerchantSummary.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            this.dgvMerchantSummary.Location = new System.Drawing.Point(10, 10);
+            this.dgvMerchantSummary.Margin = new System.Windows.Forms.Padding(10);
+            this.dgvMerchantSummary.Name = "dgvMerchantSummary";
+            this.dgvMerchantSummary.RowHeadersVisible = false;
+            this.dgvMerchantSummary.RowHeadersWidth = 51;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvMerchantSummary.RowsDefaultCellStyle = dataGridViewCellStyle17;
+            this.dgvMerchantSummary.RowTemplate.Height = 24;
+            this.dgvMerchantSummary.Size = new System.Drawing.Size(1290, 270);
+            this.dgvMerchantSummary.TabIndex = 0;
+            this.dgvMerchantSummary.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
+            this.dgvMerchantSummary.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
+            this.dgvMerchantSummary.ThemeStyle.HeaderStyle.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvMerchantSummary.ThemeStyle.HeaderStyle.Height = 38;
+            this.dgvMerchantSummary.ThemeStyle.RowsStyle.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvMerchantSummary.ThemeStyle.RowsStyle.Height = 24;
+            this.dgvMerchantSummary.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMerchantSummary_CellClick);
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "ကုန်သည်အမည်";
+            this.Column6.MinimumWidth = 6;
+            this.Column6.Name = "Column6";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "လက်ငင်းတန်ဖိုး";
+            this.Column7.MinimumWidth = 6;
+            this.Column7.Name = "Column7";
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "အကြွေးတန်ဖိုး";
+            this.Column8.MinimumWidth = 6;
+            this.Column8.Name = "Column8";
+            // 
+            // dgvPurchaseDetails
+            // 
+            this.dgvPurchaseDetails.AllowUserToAddRows = false;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.White;
+            this.dgvPurchaseDetails.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPurchaseDetails.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            this.dgvPurchaseDetails.ColumnHeadersHeight = 38;
+            this.dgvPurchaseDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            this.dgvPurchaseDetails.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9,
+            this.Column9,
+            this.Column10});
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPurchaseDetails.DefaultCellStyle = dataGridViewCellStyle20;
+            this.dgvPurchaseDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPurchaseDetails.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            this.dgvPurchaseDetails.Location = new System.Drawing.Point(10, 300);
+            this.dgvPurchaseDetails.Margin = new System.Windows.Forms.Padding(10);
+            this.dgvPurchaseDetails.Name = "dgvPurchaseDetails";
+            this.dgvPurchaseDetails.ReadOnly = true;
+            this.dgvPurchaseDetails.RowHeadersVisible = false;
+            this.dgvPurchaseDetails.RowHeadersWidth = 51;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.Cyan;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvPurchaseDetails.RowsDefaultCellStyle = dataGridViewCellStyle21;
+            this.dgvPurchaseDetails.RowTemplate.Height = 24;
+            this.dgvPurchaseDetails.Size = new System.Drawing.Size(1290, 270);
+            this.dgvPurchaseDetails.TabIndex = 1;
+            this.dgvPurchaseDetails.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
+            this.dgvPurchaseDetails.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = System.Drawing.Color.White;
+            this.dgvPurchaseDetails.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
+            this.dgvPurchaseDetails.ThemeStyle.HeaderStyle.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvPurchaseDetails.ThemeStyle.HeaderStyle.Height = 38;
+            this.dgvPurchaseDetails.ThemeStyle.ReadOnly = true;
+            this.dgvPurchaseDetails.ThemeStyle.RowsStyle.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvPurchaseDetails.ThemeStyle.RowsStyle.Height = 24;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "ဖောက်သည်အမည်";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "ငါးအမျိုးအစား";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "အလေးချိန်";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "စုစုပေါင်းတန်ဖိုး";
+            this.Column9.MinimumWidth = 6;
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "ဝယ်ယူမှုပုံစံ";
+            this.Column10.MinimumWidth = 6;
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            // 
+            // guna2Panel9
+            // 
+            this.guna2Panel9.Controls.Add(this.dtpReportDate);
+            this.guna2Panel9.Controls.Add(this.label7);
+            this.guna2Panel9.Controls.Add(this.label4);
+            this.guna2Panel9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.guna2Panel9.FillColor = System.Drawing.Color.White;
+            this.guna2Panel9.Location = new System.Drawing.Point(3, 3);
+            this.guna2Panel9.Name = "guna2Panel9";
+            this.guna2Panel9.Size = new System.Drawing.Size(1349, 107);
+            this.guna2Panel9.TabIndex = 0;
+            // 
+            // dtpReportDate
+            // 
+            this.dtpReportDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpReportDate.BorderRadius = 15;
+            this.dtpReportDate.Checked = true;
+            this.dtpReportDate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(168)))), ((int)(((byte)(92)))));
+            this.dtpReportDate.FocusedColor = System.Drawing.Color.Red;
+            this.dtpReportDate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpReportDate.ForeColor = System.Drawing.Color.White;
+            this.dtpReportDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
+            this.dtpReportDate.Location = new System.Drawing.Point(1024, 31);
+            this.dtpReportDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
+            this.dtpReportDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
+            this.dtpReportDate.Name = "dtpReportDate";
+            this.dtpReportDate.Padding = new System.Windows.Forms.Padding(15);
+            this.dtpReportDate.ShadowDecoration.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.dtpReportDate.Size = new System.Drawing.Size(297, 52);
+            this.dtpReportDate.TabIndex = 7;
+            this.dtpReportDate.Value = new System.DateTime(2026, 9, 9, 20, 54, 31, 131);
+            this.dtpReportDate.ValueChanged += new System.EventHandler(this.dtpReportDate_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(852, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(137, 36);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "ရက်စွဲဖြင့်ရှာရန်";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(199, 36);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "ယနေ့လုပ်ငန်းအနှစ်ချုပ်";
+            // 
+            // lblSummaryTotal
+            // 
+            this.lblSummaryTotal.AutoSize = true;
+            this.lblSummaryTotal.Location = new System.Drawing.Point(47, 25);
+            this.lblSummaryTotal.Name = "lblSummaryTotal";
+            this.lblSummaryTotal.Size = new System.Drawing.Size(68, 36);
+            this.lblSummaryTotal.TabIndex = 1;
+            this.lblSummaryTotal.Text = "label8";
+            // 
+            // lblDetailTotal
+            // 
+            this.lblDetailTotal.AutoSize = true;
+            this.lblDetailTotal.Location = new System.Drawing.Point(47, 84);
+            this.lblDetailTotal.Name = "lblDetailTotal";
+            this.lblDetailTotal.Size = new System.Drawing.Size(68, 36);
+            this.lblDetailTotal.TabIndex = 2;
+            this.lblDetailTotal.Text = "label9";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1437, 808);
+            this.ClientSize = new System.Drawing.Size(1613, 907);
             this.Controls.Add(this.guna2TabControl1);
             this.Font = new System.Drawing.Font("Myanmar Text", 10F);
             this.Name = "Form1";
@@ -1354,6 +1657,8 @@ namespace Fish_Market_System
             this.guna2Panel4.ResumeLayout(false);
             this.guna2Panel4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
+            this.notePanel.ResumeLayout(false);
+            this.notePanel.PerformLayout();
             this.reportTabControl.ResumeLayout(false);
             this.CashPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCash)).EndInit();
@@ -1377,8 +1682,14 @@ namespace Fish_Market_System
             this.guna2Panel6.PerformLayout();
             this.guna2Panel5.ResumeLayout(false);
             this.guna2Panel5.PerformLayout();
-            this.notePanel.ResumeLayout(false);
-            this.notePanel.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.bodyPanel.ResumeLayout(false);
+            this.bodyPanel.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMerchantSummary)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPurchaseDetails)).EndInit();
+            this.guna2Panel9.ResumeLayout(false);
+            this.guna2Panel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1470,6 +1781,25 @@ namespace Fish_Market_System
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpStartDate;
         private Guna.UI2.WinForms.Guna2TextBox txtSearchBox;
         private Guna.UI2.WinForms.Guna2Panel notePanel;
+        private TabPage tabPage1;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel9;
+        private Label label4;
+        private Guna.UI2.WinForms.Guna2Panel bodyPanel;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Guna.UI2.WinForms.Guna2DataGridView dgvMerchantSummary;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+        private DataGridViewTextBoxColumn Column8;
+        private Guna.UI2.WinForms.Guna2DataGridView dgvPurchaseDetails;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn Column9;
+        private DataGridViewTextBoxColumn Column10;
+        private Guna.UI2.WinForms.Guna2DateTimePicker dtpReportDate;
+        private Label label7;
+        private Label lblDetailTotal;
+        private Label lblSummaryTotal;
     }
 }
 

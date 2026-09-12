@@ -100,10 +100,12 @@
   <ItemGroup>
     <Compile Include="database\DBConnect.cs" />
     <Compile Include="dto\CustomerSaleReport.cs" />
+    <Compile Include="dto\dailyRepot\PurchaseDetail.cs" />
     <Compile Include="dto\DepotFish.cs" />
     <Compile Include="dto\DepotSale.cs" />
     <Compile Include="dto\DepotSpeciesStock.cs" />
     <Compile Include="dto\DepotStock.cs" />
+    <Compile Include="dto\dailyRepot\MerchantDaySummary.cs" />
     <Compile Include="dto\MerchantSaleSummary.cs" />
     <Compile Include="dto\PurchaseReport.cs" />
     <Compile Include="dto\DepotPurchaseDetails.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="repository\FishSpeciesRepository.cs" />
     <Compile Include="repository\CustomerRepository.cs" />
     <Compile Include="repository\DepotRepository.cs" />
+    <Compile Include="repository\MerchantDayReportRepository.cs" />
     <Compile Include="repository\MerchantRepository.cs" />
     <Compile Include="repository\SaleReportRepository.cs" />
     <Compile Include="service\CustomerService.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="service\DepotSaleService.cs" />
     <Compile Include="service\DepotService.cs" />
     <Compile Include="service\FishSpeciesService.cs" />
+    <Compile Include="service\MerchantDayReportService.cs" />
     <Compile Include="service\MerchantService.cs" />
     <Compile Include="service\SaleReportService.cs" />
     <Compile Include="utilis\CustomMessageBox.cs">
