@@ -105,6 +105,98 @@ namespace Fish_Market_System.repository
                 conn?.Close();
             }
         }
+
+
+        // ဒိုင်ကျန်စာရင်း
+        public bool AddDepotRemainedStockSale(DepotPurchase purchase)
+        {
+            MySqlConnection conn = null;
+            MySqlTransaction transaction = null;
+
+            try
+            {
+                conn = dbConn.GetConnection();
+                conn.Open();
+                transaction = conn.BeginTransaction();
+
+                // =========================================================
+                // ၁။ PaymentType ပြောင်းပါ
+                // =========================================================
+                string paymentType = purchase.PaymentType?.ToUpper() ?? "CASH";
+                string dbPaymentType;
+                switch (paymentType)
+                {
+                    case "CASH": dbPaymentType = "cash"; break;
+                    case "CREDIT": dbPaymentType = "credit"; break;
+                    case "DELI":
+                    case "DELIVERY": dbPaymentType = "deli"; break;
+                    default: dbPaymentType = "cash"; break;
+                }
+
+                // =========================================================
+                // ၂။ DepotPurchases ထဲထည့်ပြီး PurchaseId ကိုရယူပါ
+                // =========================================================
+                string insertPurchaseQuery = @"
+            INSERT INTO depot_stock_sales 
+                (depotId, merchantId, customerId, speciesId, quantity, sellprice, saleDate, paymentType)
+            VALUES 
+                (@dId, @mId, @Cid, @sId, @q, @price, @pDate, @pay);
+            SELECT LAST_INSERT_ID();";
+
+                int stockSaleId;
+                using (MySqlCommand cmd = new MySqlCommand(insertPurchaseQuery, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@dId", purchase.DepotId);
+                    cmd.Parameters.AddWithValue("@mId", purchase.MerchantId);
+                    cmd.Parameters.AddWithValue("@Cid", purchase.CustomerId);
+                    cmd.Parameters.AddWithValue("@sId", purchase.SpeciesId);
+                    cmd.Parameters.AddWithValue("@q", purchase.Quantity);
+                    cmd.Parameters.AddWithValue("@price", purchase.Price);
+                    cmd.Parameters.AddWithValue("@pDate", purchase.PurchaseDate);
+                    cmd.Parameters.AddWithValue("@pay", dbPaymentType);
+
+                    stockSaleId = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+
+                // =========================================================
+                // ၃။ အကြွေးဆိုရင် credits ဇယားထဲထည့်ပါ
+                // =========================================================
+                if (dbPaymentType == "credit")
+                {
+                    string insertCreditQuery = @"
+                INSERT INTO credits 
+                    (stockSaleId,customerId, merchantId, creditType, totalAmount, creditDate, status)
+                VALUES 
+                    (@stockSaleId,@cId, @mId, 'PAYABLE', @total, @cDate, 'unpaid')";
+
+                    using (MySqlCommand cmd = new MySqlCommand(insertCreditQuery, conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@stockSaleId", stockSaleId); cmd.Parameters.AddWithValue("@mId", purchase.MerchantId);
+                        cmd.Parameters.AddWithValue("@cId", purchase.CustomerId);
+                        cmd.Parameters.AddWithValue("@total", purchase.Quantity * purchase.Price);
+                        cmd.Parameters.AddWithValue("@cDate", purchase.PurchaseDate);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // =========================================================
+                // ၄။ Commit
+                // =========================================================
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                Console.WriteLine($"Error in AddPurchase: {ex.Message}");
+                throw;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
         public List<DepotPurchaseDetails> GetPurchaseByMerchantId(int merchantId)
         {
             List<DepotPurchaseDetails> purchases = new List<DepotPurchaseDetails>();

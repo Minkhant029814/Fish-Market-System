@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.cbDepotRemain = new Guna.UI2.WinForms.Guna2CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cmbPayment = new Guna.UI2.WinForms.Guna2ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -66,6 +67,7 @@
             this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPanel.BorderRadius = 15;
+            this.mainPanel.Controls.Add(this.cbDepotRemain);
             this.mainPanel.Controls.Add(this.label6);
             this.mainPanel.Controls.Add(this.cmbPayment);
             this.mainPanel.Controls.Add(this.label2);
@@ -85,8 +87,30 @@
             this.mainPanel.FillColor = System.Drawing.Color.White;
             this.mainPanel.Location = new System.Drawing.Point(12, 12);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1097, 320);
+            this.mainPanel.Size = new System.Drawing.Size(1364, 320);
             this.mainPanel.TabIndex = 0;
+            // 
+            // cbDepotRemain
+            // 
+            this.cbDepotRemain.AutoSize = true;
+            this.cbDepotRemain.BackColor = System.Drawing.Color.White;
+            this.cbDepotRemain.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
+            this.cbDepotRemain.CheckedState.BorderRadius = 0;
+            this.cbDepotRemain.CheckedState.BorderThickness = 0;
+            this.cbDepotRemain.CheckedState.FillColor = System.Drawing.Color.White;
+            this.cbDepotRemain.CheckMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
+            this.cbDepotRemain.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDepotRemain.Location = new System.Drawing.Point(19, 192);
+            this.cbDepotRemain.Name = "cbDepotRemain";
+            this.cbDepotRemain.Size = new System.Drawing.Size(96, 40);
+            this.cbDepotRemain.TabIndex = 20;
+            this.cbDepotRemain.Text = "ဒိုင်ကျန်";
+            this.cbDepotRemain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.cbDepotRemain.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
+            this.cbDepotRemain.UncheckedState.BorderRadius = 0;
+            this.cbDepotRemain.UncheckedState.BorderThickness = 0;
+            this.cbDepotRemain.UncheckedState.FillColor = System.Drawing.Color.White;
+            this.cbDepotRemain.UseVisualStyleBackColor = false;
             // 
             // label6
             // 
@@ -94,7 +118,7 @@
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(873, 128);
+            this.label6.Location = new System.Drawing.Point(1197, 128);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(96, 32);
             this.label6.TabIndex = 19;
@@ -114,7 +138,7 @@
             this.cmbPayment.Items.AddRange(new object[] {
             "လက်ငင်း",
             "အကြွေး"});
-            this.cmbPayment.Location = new System.Drawing.Point(858, 177);
+            this.cmbPayment.Location = new System.Drawing.Point(1163, 177);
             this.cmbPayment.Name = "cmbPayment";
             this.cmbPayment.Size = new System.Drawing.Size(163, 51);
             this.cmbPayment.StartIndex = 0;
@@ -125,7 +149,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(13, 99);
+            this.label2.Location = new System.Drawing.Point(216, 144);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(176, 32);
             this.label2.TabIndex = 17;
@@ -141,7 +165,7 @@
             this.cmbCus.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
             this.cmbCus.ItemHeight = 30;
-            this.cmbCus.Location = new System.Drawing.Point(225, 95);
+            this.cmbCus.Location = new System.Drawing.Point(204, 192);
             this.cmbCus.Name = "cmbCus";
             this.cmbCus.Size = new System.Drawing.Size(219, 36);
             this.cmbCus.TabIndex = 16;
@@ -152,7 +176,7 @@
             this.lblMerchantName.AutoSize = true;
             this.lblMerchantName.BackColor = System.Drawing.Color.Transparent;
             this.lblMerchantName.Font = new System.Drawing.Font("Myanmar Text", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMerchantName.Location = new System.Drawing.Point(419, 21);
+            this.lblMerchantName.Location = new System.Drawing.Point(553, 21);
             this.lblMerchantName.Name = "lblMerchantName";
             this.lblMerchantName.Size = new System.Drawing.Size(208, 50);
             this.lblMerchantName.TabIndex = 15;
@@ -165,7 +189,7 @@
             this.lblTotalAmount.BackColor = System.Drawing.Color.Transparent;
             this.lblTotalAmount.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
-            this.lblTotalAmount.Location = new System.Drawing.Point(499, 264);
+            this.lblTotalAmount.Location = new System.Drawing.Point(633, 264);
             this.lblTotalAmount.Name = "lblTotalAmount";
             this.lblTotalAmount.Size = new System.Drawing.Size(61, 32);
             this.lblTotalAmount.TabIndex = 14;
@@ -195,7 +219,7 @@
             this.btnAddPurchases.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(157)))), ((int)(((byte)(143)))));
             this.btnAddPurchases.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddPurchases.ForeColor = System.Drawing.Color.White;
-            this.btnAddPurchases.Location = new System.Drawing.Point(879, 251);
+            this.btnAddPurchases.Location = new System.Drawing.Point(1146, 251);
             this.btnAddPurchases.Name = "btnAddPurchases";
             this.btnAddPurchases.Size = new System.Drawing.Size(180, 45);
             this.btnAddPurchases.TabIndex = 12;
@@ -208,7 +232,7 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(591, 144);
+            this.label5.Location = new System.Drawing.Point(944, 144);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 32);
             this.label5.TabIndex = 11;
@@ -226,7 +250,7 @@
             this.txtBuyPrice.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtBuyPrice.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBuyPrice.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtBuyPrice.Location = new System.Drawing.Point(522, 180);
+            this.txtBuyPrice.Location = new System.Drawing.Point(907, 180);
             this.txtBuyPrice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBuyPrice.Name = "txtBuyPrice";
             this.txtBuyPrice.PlaceholderText = "";
@@ -240,7 +264,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(322, 144);
+            this.label4.Location = new System.Drawing.Point(744, 144);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(91, 32);
             this.label4.TabIndex = 9;
@@ -258,7 +282,7 @@
             this.txtQuantity.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtQuantity.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtQuantity.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtQuantity.Location = new System.Drawing.Point(300, 180);
+            this.txtQuantity.Location = new System.Drawing.Point(707, 180);
             this.txtQuantity.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.PlaceholderText = "";
@@ -276,7 +300,7 @@
             this.cmbSpecies.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbSpecies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
             this.cmbSpecies.ItemHeight = 30;
-            this.cmbSpecies.Location = new System.Drawing.Point(16, 190);
+            this.cmbSpecies.Location = new System.Drawing.Point(457, 192);
             this.cmbSpecies.Name = "cmbSpecies";
             this.cmbSpecies.Size = new System.Drawing.Size(219, 36);
             this.cmbSpecies.TabIndex = 7;
@@ -301,7 +325,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(13, 144);
+            this.label3.Location = new System.Drawing.Point(526, 144);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(126, 32);
             this.label3.TabIndex = 5;
@@ -320,19 +344,19 @@
             // 
             // purchaseDetailsView
             // 
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.White;
-            this.purchaseDetailsView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.purchaseDetailsView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.purchaseDetailsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle27.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(60)))));
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.purchaseDetailsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Myanmar Text", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(60)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.purchaseDetailsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.purchaseDetailsView.ColumnHeadersHeight = 51;
             this.purchaseDetailsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.purchaseDetailsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -342,31 +366,31 @@
             this.Quantity,
             this.TotalAmount,
             this.purchaseDate});
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle28.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle28.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.purchaseDetailsView.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.purchaseDetailsView.DefaultCellStyle = dataGridViewCellStyle3;
             this.purchaseDetailsView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.purchaseDetailsView.Location = new System.Drawing.Point(12, 353);
             this.purchaseDetailsView.Name = "purchaseDetailsView";
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.purchaseDetailsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.purchaseDetailsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.purchaseDetailsView.RowHeadersVisible = false;
             this.purchaseDetailsView.RowHeadersWidth = 51;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.purchaseDetailsView.RowsDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Myanmar Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.purchaseDetailsView.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.purchaseDetailsView.RowTemplate.Height = 30;
-            this.purchaseDetailsView.Size = new System.Drawing.Size(1089, 345);
+            this.purchaseDetailsView.Size = new System.Drawing.Size(1356, 345);
             this.purchaseDetailsView.TabIndex = 1;
             this.purchaseDetailsView.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.purchaseDetailsView.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(42)))), ((int)(((byte)(58)))));
@@ -415,7 +439,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1121, 710);
+            this.ClientSize = new System.Drawing.Size(1388, 710);
             this.Controls.Add(this.purchaseDetailsView);
             this.Controls.Add(this.mainPanel);
             this.Name = "DepotPurchaseForm";
@@ -454,5 +478,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn purchaseDate;
+        private Guna.UI2.WinForms.Guna2CheckBox cbDepotRemain;
     }
 }

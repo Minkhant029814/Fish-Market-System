@@ -17,10 +17,7 @@ namespace Fish_Market_System.service
             return saleRepo.AddSale(sale);
         }
 
-        public DepotStock GetDepotStockById(int depotId)
-        {
-            return saleRepo.GetDepotStockById(depotId);
-        }
+       
 
         public List<DepotFish> GetFishByDepot(int depotId)
         {

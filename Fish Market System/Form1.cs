@@ -153,7 +153,7 @@ namespace Fish_Market_System
                         depots,
                         fishes
                     );
-                    form.Show();
+                    form.ShowDialog();
                 };
 
                 merchantPanel.Controls.Add(btn);
@@ -845,7 +845,7 @@ namespace Fish_Market_System
                 else
                 {
                     lblSummaryTotal.Text = $"{selectedDate:dd/MM/yyyy} ရက်စွဲအတွက် ဒေတာမရှိပါ";
-                    dgvMerchantSummary.Rows.Add("ဒေတာမရှိပါ", "", "","");
+                    lblDetailTotal.Text = "ဒေတာမရှိပါ";
                 }
             }
             catch (Exception ex)

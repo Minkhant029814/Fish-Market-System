@@ -1,5 +1,6 @@
 ﻿using Fish_Market_System.model;
 using Fish_Market_System.service;
+using Fish_Market_System.utilis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -89,7 +90,9 @@ namespace Fish_Market_System.view
 
             if(string.IsNullOrEmpty(txtBuyPrice.Text) || string.IsNullOrEmpty(txtQuantity.Text))
             {
-                MessageBox.Show("‌ေဈေးနှုန်းနှင့် အလေးချိန်ကိုထည့်သွင်း‌ပါ။");
+                
+                CustomMessageBox.Show("ဈေးနှုန်းနှင့် အလေးချိန်ကိုထည့်သွင်း‌ပါ။", "သတိပေးချက်", CustomMessageBox.MessageType.Warning);
+
                 return;
             }
 
@@ -121,25 +124,45 @@ namespace Fish_Market_System.view
 
 
                 };
-                if (purchaseService.AddPurchase(purchase))
+                bool isDepotStock = cbDepotRemain.Checked;
+                if (!isDepotStock)
                 {
-                    MessageBox.Show("ဝယ်ယူမှုအောင်မြင်ပါသည်။", "အောင်မြင်သည်",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtBuyPrice.Clear();
-                    txtBuyPrice.Focus();
+                    if (purchaseService.AddPurchase(purchase))
+                    {
+                        CustomMessageBox.Show("ဝယ်ယူမှုအောင်မြင်ပါသည်။", "အောင်မြင်သည်",
+                                CustomMessageBox.MessageType.Success);
+                        txtBuyPrice.Clear();
+                        txtBuyPrice.Focus();
 
-                    txtQuantity.Clear();
-                    txtQuantity.Focus();
+                        txtQuantity.Clear();
+                        txtQuantity.Focus();
+
+                    }
+                }
+                else
+                {
+                    if (purchaseService.AddDepotRemainedSale(purchase))
+                    {
+                        CustomMessageBox.Show("ဝယ်ယူမှုအောင်မြင်ပါသည်။", "အောင်မြင်သည်",
+                               CustomMessageBox.MessageType.Success);
+                        txtBuyPrice.Clear();
+                        txtBuyPrice.Focus();
+
+                        txtQuantity.Clear();
+                        txtQuantity.Focus();
+
+
+                    }
+                  
 
                 }
                 DisplayDepotPurchasesDetails();
-
             }
             catch (FormatException)
             {
 
-             MessageBox.Show("ဈေးနှုန်းနှင့်အလေးချိန်ကို ကိန်းဂဏန်းများ ထည့်သွင်းပေးပါ။");
-                
+                CustomMessageBox.Show("ဈေးနှုန်းနှင့်အလေးချိန်ကို ကိန်းဂဏန်းများ ထည့်သွင်းပေးပါ။","သတိပေးချက်",CustomMessageBox.MessageType.Warning);
+
             }
 
            
@@ -198,11 +221,13 @@ namespace Fish_Market_System.view
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"အမှားအယွင်းဖြစ်ပွားခဲ့သည်။\n{ex.Message}", "Error",
-                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CustomMessageBox.Show($"အမှားအယွင်းဖြစ်ပွားခဲ့သည်။\n{ex.Message}", "Error",
+                      CustomMessageBox.MessageType.Error);
 
 
             }
         }
+
+      
     }
 }

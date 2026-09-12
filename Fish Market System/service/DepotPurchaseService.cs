@@ -18,6 +18,12 @@ namespace Fish_Market_System.service
             return purchaseRepo.AddPurchase(dp);
         }
 
+
+        public bool AddDepotRemainedSale(DepotPurchase purchase)
+        {
+            return purchaseRepo.AddDepotRemainedStockSale(purchase);
+        }
+
         public List<DepotPurchaseDetails> GetPurchaseByMerchantId(int merchantId)
         {
             return purchaseRepo.GetPurchaseByMerchantId(merchantId);

@@ -3,7 +3,7 @@ using Fish_Market_System.dto;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Data;  
 
 namespace Fish_Market_System.Repositories
 {
@@ -65,6 +65,7 @@ namespace Fish_Market_System.Repositories
                 throw;
             }
         }
+
         private decimal GetAvailableStock(int depotId, int speciesId)
         {
             string query = @"
@@ -260,5 +261,8 @@ namespace Fish_Market_System.Repositories
                 throw;
             }
         }
+
+
+        
     }
 }
