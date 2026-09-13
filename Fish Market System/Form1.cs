@@ -28,7 +28,7 @@ namespace Fish_Market_System
         // Lists
         private List<Merchant> merchants;
         private List<Depot> depots;
-        private List<FishSpecies> fishes;
+        private List<FishCategory> fishes;
         private List<Customer> customers;
        
         // Report Variables
@@ -355,9 +355,9 @@ namespace Fish_Market_System
                 return;
             }
 
-            FishSpecies fish = new FishSpecies
+            FishCategory fish = new FishCategory
             {
-                FishSpeciesName = txtFishName.Text
+                CategoryName = txtFishName.Text
             };
 
             if (fishSpeciesService.AddFish(fish))
@@ -370,25 +370,61 @@ namespace Fish_Market_System
             }
         }
 
+        private int fishCategoryId = 0;
         private void displayAndRefreshFish()
         {
             fishPanel.Controls.Clear();
             fishes = fishSpeciesService.GetAll();
 
-            foreach (FishSpecies f in fishes)
+            foreach (FishCategory f in fishes)
             {
-                Guna2Button btn = CreateStyledButton(f.FishSpeciesName, f);
+                Guna2Button btn = CreateStyledButton(f.CategoryName, f);
 
                 btn.Click += (sender, e) =>
                 {
-                    FishSpecies selectedFish = (FishSpecies)((Guna2Button)sender).Tag;
+                    FishCategory selectedFish = (FishCategory)((Guna2Button)sender).Tag;
                     HighlightSelectedButton(fishPanel, (Guna2Button)sender);
+                    if(pnlNewSpecies.Visible == false)
+                    {
+                        pnlNewSpecies.Visible = true;
+                    }
+
+                    
+
+                    fishCategoryId = f.CategoryId;
+                    
+                    
                    
                 };
 
                 fishPanel.Controls.Add(btn);
             }
         }
+
+        private void btnAddSpecies_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                FishSpecies fish = new FishSpecies
+                {
+                    CategoryId = fishCategoryId,
+                    FishSpeciesName = txtFishSpeciesName.Text.ToString()
+                };
+
+                if (fishSpeciesService.AddNewSpecies(fish))
+                {
+                    CustomMessageBox.Show("ငါးအမျိုးစားထည့်သွင်းခြင်း အောင်မြင်သည်။", "အောင်မြင်သည်", CustomMessageBox.MessageType.Success);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                CustomMessageBox.Show(ex.Message, "သတိပေးချက်", CustomMessageBox.MessageType.Warning);
+            }
+        }
+
 
         #endregion
 
@@ -955,6 +991,12 @@ namespace Fish_Market_System
             LoadMerchantSummary();
         }
 
+
         #endregion
+
+        private void pnlNewSpecies_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

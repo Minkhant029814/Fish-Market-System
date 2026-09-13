@@ -12,14 +12,24 @@ namespace Fish_Market_System.service
     {
         private readonly FishSpeciesRepository fishSpeciesRepository = new FishSpeciesRepository();
 
-        public bool AddFish(FishSpecies fish)
+        public bool AddFish(FishCategory fish)
         {
             return fishSpeciesRepository.AddFish(fish);
         }
 
-        public List<FishSpecies> GetAll()
+        public List<FishCategory> GetAll()
         {
             return fishSpeciesRepository.GetAll();
+        }
+
+        public bool AddNewSpecies(FishSpecies fish)
+        {
+            return fishSpeciesRepository.AddNewFishSpeices(fish);
+        }
+
+        public List<FishSpecies> GetAllSpecies(int categoryId)
+        {
+            return fishSpeciesRepository.GetAllSpeices(categoryId);
         }
     }
 }

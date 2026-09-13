@@ -118,6 +118,7 @@
     <Compile Include="model\Customer.cs" />
     <Compile Include="model\Depot.cs" />
     <Compile Include="dto\DepotPurchase.cs" />
+    <Compile Include="model\FishCategory.cs" />
     <Compile Include="model\FishSpecies.cs" />
     <Compile Include="model\Merchant.cs" />
     <Compile Include="Program.cs" />

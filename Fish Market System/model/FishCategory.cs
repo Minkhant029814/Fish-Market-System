@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Fish_Market_System.model
 {
-    internal class FishSpecies
+    public class FishCategory
     {
         public int CategoryId { get; set; }
-        public int FishSpeciesId { get; set; }
-        public string FishSpeciesName { get; set; }
+        public string CategoryName { get; set; }
     }
 }
