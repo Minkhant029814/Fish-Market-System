@@ -11,12 +11,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TheArtOfDevHtmlRenderer.Adapters.Entities;
 
 namespace Fish_Market_System
 {
     public partial class Form1 : Form
     {
+        #region Services & Variables
+
         // Services
         private readonly MerchantService merchantService = new MerchantService();
         private readonly CustomerService customerService = new CustomerService();
@@ -24,15 +25,26 @@ namespace Fish_Market_System
         private readonly FishSpeciesService fishSpeciesService = new FishSpeciesService();
         private readonly DepotSaleService saleService = new DepotSaleService();
         private readonly SaleReportService reportService = new SaleReportService();
+        private readonly MerchantDayReportService merchantReportService = new MerchantDayReportService();
+        private readonly MerchantCreditService merchantCreditService = new MerchantCreditService();
 
         // Lists
         private List<Merchant> merchants;
         private List<Depot> depots;
         private List<FishCategory> fishes;
         private List<Customer> customers;
-       
+
         // Report Variables
         private int selectedCustomerIdForReport = 0;
+        private int merchantIdForCreditLists = 0;
+        private int currentMerchantId = 0;
+        private int selectedMerchantId = 0;
+        private DateTime selectedDate = DateTime.Now;
+        private int fishCategoryId = 0;
+
+        #endregion
+
+        #region Constructor & Form Load
 
         public Form1()
         {
@@ -40,26 +52,45 @@ namespace Fish_Market_System
             this.Load += Form1_Load;
         }
 
-        #region Form Load & Setup
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            // DataGridView တွေကို Configure လုပ်ပါ
+            // ============================================
+            // ၁။ DataGridView Configure
+            // ============================================
             ConfigureDataGridView(dgvCash);
             ConfigureDataGridView(dvgCredit);
+            //ConfigureDataGridView(dgvDeli);
             ConfigureDataGridView(dgvCashSales);
             ConfigureDataGridView(dgvCreditSales);
 
-            // Default Tab ရွေးပါ
+            // ✅ Credit Grid တွေကို Setup လုပ်ပါ
+            if (dgvNormalCredit.Columns.Count == 0)
+                SetupCreditGrid(dgvNormalCredit);
+            if (dgvStockCredit.Columns.Count == 0)
+                SetupCreditGrid(dgvStockCredit);
+            if (dgvAllCredit.Columns.Count == 0)
+                SetupCreditGrid(dgvAllCredit);
+            // ============================================
+            // ၂။ DateTimePicker Settings
+            // ============================================
+            dtpStartDate.MaxDate = DateTime.Now.Date;
+            dtpReportDate.MaxDate = DateTime.Now.Date;
+            dtpStartDate.Value = DateTime.Now.Date;
+            dtpReportDate.Value = DateTime.Now.Date;
+
+            // Event ချိတ်ဆက်ခြင်း
+            dtpStartDate.ValueChanged += dtpStartDate_ValueChanged;
+            dtpReportDate.ValueChanged += dtpReportDate_ValueChanged;
+
+            // ============================================
+            // ၃။ Default Tab
+            // ============================================
             reportTabControl.SelectedTab = CashPage;
 
-            // Data အကုန် Load လုပ်ပါ
+            // ============================================
+            // ၄။ Data Load
+            // ============================================
             LoadAllData();
-
-            //DateTime ကို default သတ်မှတ်ထားခြင်း
-           
-            dtpStartDate.Value = DateTime.Now;
-            dtpReportDate.Value = DateTime.Now;
         }
 
         private void ConfigureDataGridView(DataGridView view)
@@ -84,20 +115,58 @@ namespace Fish_Market_System
             view.AllowUserToAddRows = false;
 
             // Alternating Row Color
-            view.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 248, 255);
+            view.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
             view.RowsDefaultCellStyle.BackColor = Color.White;
         }
 
         private void LoadAllData()
         {
-            displayAndRefreshMerchant();
-            displayAndRefreshCustomer();
-            displayAndRefreshDepot();
-            displayAndRefreshFish();
-            DisplayClientsAndTheirPurchaseList(customers);
-            SetupSummaryGrid();
-            SetupDetailGrid();
-         
+            try
+            {
+                // ၁။ ကုန်သည် (Merchant Panel)
+                displayAndRefreshMerchant();
+
+                // ၂။ ဖောက်သည် (Customer)
+                displayAndRefreshCustomer();
+
+                // ၃။ ဒိုင် (Depot)
+                displayAndRefreshDepot();
+
+                // ၄။ ငါး (Fish)
+                displayAndRefreshFish();
+
+                // ၅။ DataGridView Setup
+                SetupSummaryGrid();
+                SetupDetailGrid();
+
+                // ✅ Credit Grid Setup (dgv ၃ ခုလုံး)
+                if (dgvNormalCredit.Columns.Count == 0)
+                    SetupCreditGrid(dgvNormalCredit);
+                if (dgvStockCredit.Columns.Count == 0)
+                    SetupCreditGrid(dgvStockCredit);
+                if (dgvAllCredit.Columns.Count == 0)
+                    SetupCreditGrid(dgvAllCredit);
+
+                // ၆။ Customer List
+                DisplayClientsAndTheirPurchaseList(customers);
+
+                // ၇။ Merchant Credit List
+                if (merchants != null && merchants.Count > 0)
+                {
+                    DisplayMerchantCreditsLists(merchants);
+                }
+
+                // ၈။ Today Report
+                LoadMerchantSummary();
+
+                // ၉။ Merchant Sales
+                LoadSalesRate();
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show($"Error in LoadAllData: {ex.Message}", "Error",
+                                      CustomMessageBox.MessageType.Error);
+            }
         }
 
         #endregion
@@ -116,14 +185,14 @@ namespace Fish_Market_System
 
             Merchant m = new Merchant
             {
-                MerchantName = txtMerchantName.Text
+                MerchantName = txtMerchantName.Text.Trim()
             };
 
             if (merchantService.AddMerchant(m))
             {
                 CustomMessageBox.Show("ကုန်သည်နာမည်အား ထည့်သွင်းပြီးပါပြီ", "အောင်မြင်သည်",
                                CustomMessageBox.MessageType.Success);
-                
+
                 displayAndRefreshMerchant();
                 txtMerchantName.Clear();
                 txtMerchantName.Focus();
@@ -135,7 +204,9 @@ namespace Fish_Market_System
             merchantPanel.Controls.Clear();
 
             merchants = merchantService.GetAll();
-            lblMerchantCounts.Text = $" ကုန်သည်အရေအတွက် {merchants.Count} ဦး";
+            lblMerchantCounts.Text = $" ကုန်သည်အရေအတွက် {merchants?.Count ?? 0} ဦး";
+
+            if (merchants == null || merchants.Count == 0) return;
 
             foreach (Merchant m in merchants)
             {
@@ -158,8 +229,6 @@ namespace Fish_Market_System
 
                 merchantPanel.Controls.Add(btn);
             }
-
-            LoadSalesRate();
         }
 
         #endregion
@@ -170,7 +239,6 @@ namespace Fish_Market_System
         {
             if (string.IsNullOrEmpty(txtClientName.Text))
             {
-                
                 CustomMessageBox.Show("ဖောက်သည်နာမည်ကို ထည့်သွင်းပေးပါ။",
                       "သတိပေးချက်", CustomMessageBox.MessageType.Warning);
                 txtClientName.Focus();
@@ -179,33 +247,31 @@ namespace Fish_Market_System
 
             Customer customer = new Customer
             {
-                CustomerName = txtClientName.Text
+                CustomerName = txtClientName.Text.Trim()
             };
 
             if (customerService.AddCustomer(customer))
             {
                 CustomMessageBox.Show("ဖောက်သည်နာမည်အား ထည့်သွင်းပြီးပါပြီ", "အောင်မြင်သည်",
                                CustomMessageBox.MessageType.Success);
+
                 displayAndRefreshCustomer();
+                DisplayClientsAndTheirPurchaseList(customers);
                 txtClientName.Clear();
                 txtClientName.Focus();
             }
         }
 
-        
         private void displayAndRefreshCustomer()
         {
             customers = customerService.GetAll();
         }
 
-       
         private void txtSearchBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
                 string name = txtSearchBox.Text.Trim();
-
-               
                 string searchName = string.IsNullOrWhiteSpace(name) ? null : name;
 
                 customers = customerService.GetAll(searchName);
@@ -217,9 +283,6 @@ namespace Fish_Market_System
                                 CustomMessageBox.MessageType.Error);
             }
         }
-
-
-
 
         #endregion
 
@@ -237,13 +300,14 @@ namespace Fish_Market_System
 
             Depot depot = new Depot
             {
-                DepotName = txtdepotName.Text
+                DepotName = txtdepotName.Text.Trim()
             };
 
             if (depotService.AddDepot(depot))
             {
                 CustomMessageBox.Show("ဒိုင်နာမည်အား ထည့်သွင်းပြီးပါပြီ", "အောင်မြင်သည်",
                                CustomMessageBox.MessageType.Success);
+
                 displayAndRefreshDepot();
                 txtdepotName.Clear();
                 txtdepotName.Focus();
@@ -254,6 +318,8 @@ namespace Fish_Market_System
         {
             depotPanel.Controls.Clear();
             depots = depotService.GetAll();
+
+            if (depots == null || depots.Count == 0) return;
 
             foreach (Depot depot in depots)
             {
@@ -349,7 +415,7 @@ namespace Fish_Market_System
         {
             if (string.IsNullOrEmpty(txtFishName.Text))
             {
-                CustomMessageBox.Show("ငါးအမျိုးစား နာမည်ကို ထည့်သွင်းပေးပါါငအ ",
+                CustomMessageBox.Show("ငါးအမျိုးအစား နာမည်ကို ထည့်သွင်းပေးပါ။",
                       "သတိပေးချက်", CustomMessageBox.MessageType.Warning);
                 txtFishName.Focus();
                 return;
@@ -357,24 +423,26 @@ namespace Fish_Market_System
 
             FishCategory fish = new FishCategory
             {
-                CategoryName = txtFishName.Text
+                CategoryName = txtFishName.Text.Trim()
             };
 
             if (fishSpeciesService.AddFish(fish))
             {
-                CustomMessageBox.Show("ငါးအမျိုးစားနာမည်အား ထည့်သွင်းပြီးပါပြီ", "အောင်မြင်သည်",
+                CustomMessageBox.Show("ငါးအမျိုးအစားနာမည်အား ထည့်သွင်းပြီးပါပြီ", "အောင်မြင်သည်",
                                CustomMessageBox.MessageType.Success);
+
                 displayAndRefreshFish();
                 txtFishName.Clear();
                 txtFishName.Focus();
             }
         }
 
-        private int fishCategoryId = 0;
         private void displayAndRefreshFish()
         {
             fishPanel.Controls.Clear();
             fishes = fishSpeciesService.GetAll();
+
+            if (fishes == null || fishes.Count == 0) return;
 
             foreach (FishCategory f in fishes)
             {
@@ -384,17 +452,13 @@ namespace Fish_Market_System
                 {
                     FishCategory selectedFish = (FishCategory)((Guna2Button)sender).Tag;
                     HighlightSelectedButton(fishPanel, (Guna2Button)sender);
-                    if(pnlNewSpecies.Visible == false)
+
+                    if (pnlNewSpecies.Visible == false)
                     {
                         pnlNewSpecies.Visible = true;
                     }
 
-                    
-
-                    fishCategoryId = f.CategoryId;
-                    
-                    
-                   
+                    fishCategoryId = selectedFish.CategoryId;
                 };
 
                 fishPanel.Controls.Add(btn);
@@ -403,28 +467,35 @@ namespace Fish_Market_System
 
         private void btnAddSpecies_Click(object sender, EventArgs e)
         {
-
             try
             {
+                if (string.IsNullOrEmpty(txtFishSpeciesName.Text))
+                {
+                    CustomMessageBox.Show("ငါးမျိုးစိတ်နာမည် ထည့်ပါ။",
+                                          "သတိပေးချက်",
+                                          CustomMessageBox.MessageType.Warning);
+                    return;
+                }
+
                 FishSpecies fish = new FishSpecies
                 {
                     CategoryId = fishCategoryId,
-                    FishSpeciesName = txtFishSpeciesName.Text.ToString()
+                    FishSpeciesName = txtFishSpeciesName.Text.Trim()
                 };
 
                 if (fishSpeciesService.AddNewSpecies(fish))
                 {
-                    CustomMessageBox.Show("ငါးအမျိုးစားထည့်သွင်းခြင်း အောင်မြင်သည်။", "အောင်မြင်သည်", CustomMessageBox.MessageType.Success);
+                    CustomMessageBox.Show("ငါးမျိုးစိတ် ထည့်သွင်းခြင်း အောင်မြင်သည်။",
+                                          "အောင်မြင်သည်",
+                                          CustomMessageBox.MessageType.Success);
+                    txtFishSpeciesName.Clear();
                 }
-
             }
             catch (Exception ex)
             {
-
                 CustomMessageBox.Show(ex.Message, "သတိပေးချက်", CustomMessageBox.MessageType.Warning);
             }
         }
-
 
         #endregion
 
@@ -436,10 +507,8 @@ namespace Fish_Market_System
 
             lblClientCounts.Text = $" ဖောက်သည်အရေအတွက် {customers?.Count ?? 0} ဦး";
 
-            // Customer မရှိရင်
             if (customers == null || customers.Count == 0)
             {
-                // Search box မှာ စာရှိလား စစ်ပါ
                 bool isSearching = !string.IsNullOrWhiteSpace(txtSearchBox.Text);
 
                 Label lbl = new Label
@@ -451,15 +520,14 @@ namespace Fish_Market_System
                     AutoSize = true,
                     Margin = new Padding(5),
                     ForeColor = isSearching
-                        ? Color.FromArgb(231, 76, 60)   // search → အနီ
-                        : Color.FromArgb(26, 42, 58)    // empty  → အနက်ပြာ
+                        ? Color.FromArgb(231, 76, 60)
+                        : Color.FromArgb(26, 42, 58)
                 };
 
                 ClientPanel.Controls.Add(lbl);
                 return;
             }
 
-            // Customer ရှိရင် button တွေ ဖန်တီးပါ
             foreach (Customer c in customers)
             {
                 Guna2Button btn = CreateStyledButton(c.CustomerName, c);
@@ -481,34 +549,16 @@ namespace Fish_Market_System
                 ClientPanel.Controls.Add(btn);
             }
         }
+
         private void DisplaySaleReportForCustomer(int customerId, string paymentType)
         {
             try
             {
-                string dbPaymentType;
-                string type = paymentType?.ToUpper() ?? "CASH";
-
-                switch (type)
-                {
-                    case "CASH":
-                        dbPaymentType = "cash";
-                        break;
-                    case "CREDIT":
-                        dbPaymentType = "credit";
-                        break;
-                    case "DELI":
-                    case "DELIVERY":
-                        dbPaymentType = "deli";
-                        break;
-                    default:
-                        dbPaymentType = "cash";
-                        break;
-                }
+                string dbPaymentType = GetDbPaymentType(paymentType);
 
                 List<CustomerSaleReport> reports = reportService.GetSalesByCustomerAndPayment(customerId, dbPaymentType);
                 DataGridView view = GetDataGridViewByPaymentType(paymentType);
 
-                // DataGridView ကိုရှင်းပါ (Rows ပဲရှင်းပါ)
                 view.Rows.Clear();
 
                 if (reports.Count > 0)
@@ -525,7 +575,6 @@ namespace Fish_Market_System
                         );
                     }
 
-                    // စုစုပေါင်းပြပါ
                     decimal totalAmount = reports.Sum(r => r.TotalAmount);
                     decimal totalQty = reports.Sum(r => r.Quantity);
 
@@ -548,20 +597,35 @@ namespace Fish_Market_System
             }
         }
 
+        #endregion
+
+        #region Helper Methods
+
+        private string GetDbPaymentType(string paymentType)
+        {
+            string type = paymentType?.ToUpper() ?? "CASH";
+
+            switch (type)
+            {
+                case "CASH": return "cash";
+                case "CREDIT": return "credit";
+                case "DELI":
+                case "DELIVERY": return "deli";
+                default: return "cash";
+            }
+        }
+
         private DataGridView GetDataGridViewByPaymentType(string paymentType)
         {
             string type = paymentType?.ToUpper() ?? "CASH";
 
             switch (type)
             {
-                case "CASH":
-                    return dgvCash;
-                case "CREDIT":
-                    return dvgCredit;
-               
-                
-                default:
-                    return dgvCash;
+                case "CASH": return dgvCash;
+                case "CREDIT": return dvgCredit;
+                case "DELI":
+                //case "DELIVERY": return dgvDeli;
+                default: return dgvCash;
             }
         }
 
@@ -572,26 +636,14 @@ namespace Fish_Market_System
                 notePanel.FillColor = Color.FromArgb(37, 168, 92);
                 return "CASH";
             }
-                
-               
             else if (reportTabControl.SelectedTab == CreditPage)
             {
                 notePanel.FillColor = Color.FromArgb(231, 111, 81);
                 return "CREDIT";
             }
-               
-
-           
 
             return "CASH";
         }
-
-
-
-
-        #endregion
-
-        #region Helper Methods
 
         private void HighlightSelectedButton(Panel panel, Guna2Button selectedBtn)
         {
@@ -599,14 +651,12 @@ namespace Fish_Market_System
             {
                 if (control is Guna2Button btn)
                 {
-                    // မရွေးထားတဲ့ button အားလုံး → default အရောင်
                     btn.FillColor = Color.FromArgb(42, 157, 143);
                     btn.ForeColor = Color.White;
                 }
             }
 
-            // ရွေးထားတဲ့ button → အစိမ်းရောင်
-            selectedBtn.FillColor = Color.FromArgb(46, 204, 113);   // လှတဲ့ အစိမ်း
+            selectedBtn.FillColor = Color.FromArgb(46, 204, 113);
             selectedBtn.ForeColor = Color.White;
         }
 
@@ -619,9 +669,9 @@ namespace Fish_Market_System
                 Height = height,
                 Margin = new Padding(5),
                 ForeColor = Color.White,
-                FillColor = Color.FromArgb(42, 157, 143),       // Default
-                HoverState = { FillColor = Color.FromArgb(60, 180, 165) },  // Hover
-                PressedColor = Color.FromArgb(30, 120, 110),    // Pressed
+                FillColor = Color.FromArgb(42, 157, 143),
+                HoverState = { FillColor = Color.FromArgb(60, 180, 165) },
+                PressedColor = Color.FromArgb(30, 120, 110),
                 BorderRadius = 12,
                 Font = new Font("Pyidaungsu", 10, FontStyle.Bold),
                 Tag = tag,
@@ -630,103 +680,91 @@ namespace Fish_Market_System
                 TextAlign = HorizontalAlignment.Center
             };
         }
-        #endregion
 
         private void reportTabControl_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            
-
+            // Customer Report
             if (selectedCustomerIdForReport > 0)
             {
                 string paymentType = GetPaymentFromTab();
-                
-                    DisplaySaleReportForCustomer(selectedCustomerIdForReport, paymentType);
+                DisplaySaleReportForCustomer(selectedCustomerIdForReport, paymentType);
+            }
+
+            // Merchant Credit Report
+            if (merchantIdForCreditLists > 0)
+            {
+                LoadMerchantCreditSummary(merchantIdForCreditLists);
             }
         }
 
+        #endregion
+
         #region Merchant Sales List
+
         private void LoadSalesRate()
         {
             comboMerchants.Items.Clear();
 
-            if(merchants.Count > 0)
+            if (merchants != null && merchants.Count > 0)
             {
-
-               
                 foreach (Merchant m in merchants)
                 {
                     comboMerchants.Items.Add(m);
-
-
                 }
+
+                comboMerchants.DisplayMember = "MerchantName";
+                comboMerchants.ValueMember = "MerchantId";
                 comboMerchants.SelectedIndex = 0;
-
             }
-
-      
-            // ComboBox ထဲမှာ မလိုလားအပ်တဲ့ Duplicate item များ မဖြစ်အောင် Clear အရင်လုပ်ပါ
-
-            // Merchant list ကို DataBind လုပ်ခြင်း
-            comboMerchants.DisplayMember = "MerchantName"; // User ကို ပြသချင်သည့် Field
-            comboMerchants.ValueMember = "MerchantId";     // နောက်ကွယ်မှာ သုံးချင်သည့် ID Field
-        
         }
-        private int currentMerchantId = 0;
+
         private void comboMerchants_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboMerchants.SelectedItem is Merchant selectedMerchant)
             {
-                
                 this.currentMerchantId = selectedMerchant.MerchantId;
-
-                DateTime startDate = dtpStartDate.Value.Date;
-                //MessageBox.Show($"Merchant Id is {merchantId}");
                 RenderSalesData();
             }
         }
-        
 
         private void RenderSalesData()
         {
-            DateTime startDate = dtpStartDate.Value.Date;
-             if (startDate > DateTime.Now.Date)
-                {
-                    CustomMessageBox.Show(
-                        $"ယနေ့သည် {DateTime.Now:dd-MM-yyyy} ဖြစ်သည်။ အနာဂတ်ရက်စွဲကို ရွေးလို့မရပါ။",
-                        "သတိပေးချက်",
-                        CustomMessageBox.MessageType.Warning);
+            try
+            {
+                if (currentMerchantId <= 0) return;
 
-                    // ယနေ့ရက်စွဲကို ပြန်သတ်မှတ်ပါ
-                    dtpStartDate.Value = DateTime.Now.Date;
-                    startDate = DateTime.Now.Date;
-                }
-            // ၁။ Merchant ရဲ့ Sales Data အားလုံးကို ယူမည်
-            List<MerchantSalesSummary> allSales = merchantService.GetSalesByMerchantId(currentMerchantId,startDate);
+                DateTime startDate = dtpStartDate.Value.Date;
 
-            // ၂။ LINQ ဖြင့် Cash နှင့် Credit ခွဲထုတ်မည်
-            var cashSales = allSales.Where(s => s.PaymentType.ToLower() == "cash").ToList();
-            var creditSales = allSales.Where(s => s.PaymentType.ToLower() == "credit").ToList();
+                List<MerchantSalesSummary> allSales = merchantService.GetSalesByMerchantId(currentMerchantId, startDate);
 
-            // ၃။ dgvCash ထဲသို့ ထည့်ခြင်း
-            PopulateGrid(dgvCashSales, cashSales);
-            decimal totalCashSalesAmount = cashSales.Sum(c => c.TotalAmount);
+                if (allSales == null) allSales = new List<MerchantSalesSummary>();
 
-            // ၄။ dgvCredit ထဲသို့ ထည့်ခြင်း
-            PopulateGrid(dgvCreditSales, creditSales);
-            decimal totalCreditSalesAmount = creditSales.Sum(c => c.TotalAmount);
+                var cashSales = allSales.Where(s => s.PaymentType != null && s.PaymentType.ToLower() == "cash").ToList();
+                var creditSales = allSales.Where(s => s.PaymentType != null && s.PaymentType.ToLower() == "credit").ToList();
 
-            lblTotalCashSales.Text = $"လက်ငင်းရောင်းရငွေ စုစုပေါင်း = { totalCashSalesAmount:N2}ကျပ် ";
-            lblTotalCreditSales.Text = $"အကြွေးရောင်းရငွေ စုစုပေါင်း = { totalCreditSalesAmount:N2} ကျပ်";
+                PopulateGrid(dgvCashSales, cashSales);
+                decimal totalCashSalesAmount = cashSales.Sum(c => c.TotalAmount);
+
+                PopulateGrid(dgvCreditSales, creditSales);
+                decimal totalCreditSalesAmount = creditSales.Sum(c => c.TotalAmount);
+
+                lblTotalCashSales.Text = $"လက်ငင်းရောင်းရငွေ စုစုပေါင်း = {totalCashSalesAmount:N2} ကျပ်";
+                lblTotalCreditSales.Text = $"အကြွေးရောင်းရငွေ စုစုပေါင်း = {totalCreditSalesAmount:N2} ကျပ်";
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show($"Error: {ex.Message}", "Error",
+                                      CustomMessageBox.MessageType.Error);
+            }
         }
 
-        // DataGridView ထဲသို့ Data ထည့်ပေးသည့် Helper Method (Code စိစစ်သန့်ရှင်းစေရန်)
         private void PopulateGrid(DataGridView dgv, List<MerchantSalesSummary> salesList)
         {
             dgv.SuspendLayout();
             dgv.DataSource = null;
             dgv.Rows.Clear();
 
-           if(salesList.Count  > 0)
+            if (salesList.Count > 0)
             {
                 foreach (MerchantSalesSummary sale in salesList)
                 {
@@ -738,26 +776,23 @@ namespace Fish_Market_System
                         sale.TotalAmount.ToString("N2")
                     );
                 }
-
-                
-            } else
+            }
+            else
             {
                 dgv.Rows.Add("ဒေတာမရှိပါ", "", "", "", "");
             }
 
-                dgv.ResumeLayout();
+            dgv.ResumeLayout();
         }
-
-
-       
 
         private void dtpStartDate_ValueChanged(object sender, EventArgs e)
         {
-            if(currentMerchantId > 0)
+            if (currentMerchantId > 0)
             {
                 RenderSalesData();
             }
         }
+
         #endregion
 
         #region Today Report
@@ -826,31 +861,14 @@ namespace Fish_Market_System
             dgvPurchaseDetails.AllowUserToAddRows = false;
         }
 
-        private int selectedMerchantId = 0;
-        private DateTime selectedDate = DateTime.Now;
-        private readonly MerchantDayReportService merchantRepotService = new MerchantDayReportService();
         private void LoadMerchantSummary()
         {
             try
             {
                 selectedDate = dtpReportDate.Value.Date;
-                if (selectedDate > DateTime.Now.Date)
-                {
-                    CustomMessageBox.Show(
-                        $"ယနေ့သည် {DateTime.Now:dd-MM-yyyy} ဖြစ်သည်။ အနာဂတ်ရက်စွဲကို ရွေးလို့မရပါ။",
-                        "သတိပေးချက်",
-                        CustomMessageBox.MessageType.Warning);
 
-                    // ယနေ့ရက်စွဲကို ပြန်သတ်မှတ်ပါ
-                    dtpReportDate.Value = DateTime.Now.Date;
-                    selectedDate = DateTime.Now.Date;
-                }
-
-
-
-                List<MerchantDaySummary> summaries = merchantRepotService.GetMerchantSummaryByDate(selectedDate);
+                List<MerchantDaySummary> summaries = merchantReportService.GetMerchantSummaryByDate(selectedDate);
                 dgvMerchantSummary.Rows.Clear();
-
                 dgvPurchaseDetails.Rows.Clear();
 
                 if (summaries.Count > 0)
@@ -867,16 +885,16 @@ namespace Fish_Market_System
                             s.TotalQuantity.ToString("N2"),
                             s.TotalAmount.ToString("#,##0.00")
                         );
-                    }// Summary စုစုပေါင်း
+                    }
+
                     decimal totalCash = summaries.Sum(s => s.CashAmount);
                     decimal totalCredit = summaries.Sum(s => s.CreditAmount);
                     decimal grandTotal = totalCash + totalCredit;
 
-                   lblSummaryTotal.Text = $"ကုန်သည် {summaries.Count} ဦး | " +
-                                            $"လက်ငင်း: {totalCash:#,##0.00} ကျပ် | " +
-                                            $"အကြွေး: {totalCredit:#,##0.00} ကျပ် | " +
-                                          
-                                            $"စုစုပေါင်း: {grandTotal:#,##0.00} ကျပ်";
+                    lblSummaryTotal.Text = $"ကုန်သည် {summaries.Count} ဦး | " +
+                                           $"လက်ငင်း: {totalCash:#,##0.00} ကျပ် | " +
+                                           $"အကြွေး: {totalCredit:#,##0.00} ကျပ် | " +
+                                           $"စုစုပေါင်း: {grandTotal:#,##0.00} ကျပ်";
                 }
                 else
                 {
@@ -886,12 +904,9 @@ namespace Fish_Market_System
             }
             catch (Exception ex)
             {
-
                 CustomMessageBox.Show($"Error {ex.Message}", "Error", CustomMessageBox.MessageType.Warning);
             }
         }
-
-        
 
         private void dgvMerchantSummary_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -904,15 +919,10 @@ namespace Fish_Market_System
                 if (row.Cells["colMerchantId"].Value == null) return;
 
                 selectedMerchantId = Convert.ToInt32(row.Cells["colMerchantId"].Value);
-                string merchantName = row.Cells["colMerchantName"].Value?.ToString() ?? "";
-
                 LoadPurchaseDetails(selectedMerchantId, selectedDate);
-
-
             }
             catch (Exception ex)
             {
-
                 CustomMessageBox.Show($"Error {ex.Message}", "Error", CustomMessageBox.MessageType.Error);
             }
         }
@@ -921,7 +931,7 @@ namespace Fish_Market_System
         {
             try
             {
-                List<PurchaseDetail> details = merchantRepotService.GetPurchaseDetails(merchantId, date);
+                List<PurchaseDetail> details = merchantReportService.GetPurchaseDetails(merchantId, date);
 
                 dgvPurchaseDetails.Rows.Clear();
 
@@ -929,28 +939,29 @@ namespace Fish_Market_System
                 {
                     foreach (PurchaseDetail d in details)
                     {
-                        // Payment Type ကို မြန်မာလိုပြောင်းပါ
                         string paymentDisplay;
                         Color rowColor;
-                        Color textColor;
+                        Color textColor = Color.White;
 
                         switch (d.PaymentType?.ToLower())
                         {
                             case "cash":
                                 paymentDisplay = "လက်ငင်း";
                                 rowColor = Color.FromArgb(76, 175, 80);
-                                textColor = Color.White;
                                 break;
                             case "credit":
                                 paymentDisplay = "အကြွေး";
                                 rowColor = Color.FromArgb(255, 152, 0);
-                                textColor = Color.White;
                                 break;
-                            
+                            case "deli":
+                            case "delivery":
+                                paymentDisplay = "နယ်ဝေးပို့";
+                                rowColor = Color.FromArgb(33, 150, 243);
+                                break;
                             default:
                                 paymentDisplay = d.PaymentType ?? "မသိ";
                                 rowColor = Color.White;
-                                textColor = Color.Black; // ✅ ဒီမှာ သတ်မှတ်ပါ
+                                textColor = Color.Black;
                                 break;
                         }
 
@@ -966,8 +977,8 @@ namespace Fish_Market_System
                         dgvPurchaseDetails.Rows[rowIndex].DefaultCellStyle.BackColor = rowColor;
                         dgvPurchaseDetails.Rows[rowIndex].DefaultCellStyle.ForeColor = textColor;
                     }
-                        // စုစုပေါင်း
-                        decimal totalQty = details.Sum(d => d.Quantity);
+
+                    decimal totalQty = details.Sum(d => d.Quantity);
                     decimal totalAmount = details.Sum(d => d.TotalAmount);
 
                     lblDetailTotal.Text = $"မှတ်တမ်း {details.Count} ခု | " +
@@ -982,21 +993,290 @@ namespace Fish_Market_System
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error",
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CustomMessageBox.Show($"Error: {ex.Message}", "Error",
+                               CustomMessageBox.MessageType.Error);
             }
         }
+
         private void dtpReportDate_ValueChanged(object sender, EventArgs e)
         {
             LoadMerchantSummary();
         }
 
-
         #endregion
 
-        private void pnlNewSpecies_Paint(object sender, PaintEventArgs e)
+        #region Merchant Credits List
+
+        private void DisplayMerchantCreditsLists(List<Merchant> merchants)
+        {
+            merchantCreditPanels.Controls.Clear();
+
+            lblMerchantCounts.Text = $" ကုန်သည်အရေအတွက် {merchants?.Count ?? 0} ဦး";
+
+            if (merchants == null || merchants.Count == 0)
+            {
+                bool isSearching = !string.IsNullOrWhiteSpace(txtCreditMerchants.Text);
+
+                Label lbl = new Label
+                {
+                    Text = isSearching
+                        ? "🔍 ရှာဖွေမှုနှင့်ကိုက်ညီသော ကုန်သည်မရှိပါ"
+                        : "📋 ကုန်သည် စာရင်း မရှိသေးပါ",
+                    Font = new Font("Pyidaungsu", 11, FontStyle.Regular),
+                    AutoSize = true,
+                    Margin = new Padding(5),
+                    ForeColor = isSearching
+                        ? Color.FromArgb(231, 76, 60)
+                        : Color.FromArgb(26, 42, 58)
+                };
+
+                merchantCreditPanels.Controls.Add(lbl);
+                return;
+            }
+
+            foreach (Merchant m in merchants)
+            {
+                Guna2Button btn = CreateStyledButton(m.MerchantName, m);
+
+                btn.Click += (sender, e) =>
+                {
+                    Guna2Button clickedBtn = (Guna2Button)sender;
+                    Merchant selectedMerchant = (Merchant)clickedBtn.Tag;
+                    merchantIdForCreditLists = selectedMerchant.MerchantId;
+
+                    HighlightSelectedButton(merchantCreditPanels, clickedBtn);
+                    LoadMerchantCreditSummary(selectedMerchant.MerchantId);
+
+                    lblSelectedMerchant.Text = $"📋 {selectedMerchant.MerchantName} ရဲ့ အကြွေးစာရင်း";
+                };
+
+                merchantCreditPanels.Controls.Add(btn);
+            }
+        }
+
+        private void txtCreditMerchants_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string name = txtCreditMerchants.Text.Trim();
+                string searchName = string.IsNullOrWhiteSpace(name) ? null : name;
+
+                merchants = merchantService.GetAll(searchName);
+                DisplayMerchantCreditsLists(merchants);
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show($"Error: {ex.Message}", "Error",
+                                CustomMessageBox.MessageType.Error);
+            }
+        }
+
+        private void LoadMerchantCreditSummary(int merchantId)
+        {
+            try
+            {
+                // DataGridView Setup
+                if (dgvNormalCredit.Columns.Count == 0)
+                    SetupCreditGrid(dgvNormalCredit);
+                if (dgvStockCredit.Columns.Count == 0)
+                    SetupCreditGrid(dgvStockCredit);
+                if (dgvAllCredit.Columns.Count == 0)
+                    SetupCreditGrid(dgvAllCredit);
+
+                // ============================================
+                // ၁။ ရိုးရိုးအကြွေး
+                // ============================================
+                List<MerchantCreditSummary> normalCredits =
+                    merchantCreditService.GetNormalCreditSummary(merchantId);
+
+                PopulateCreditGrid(dgvNormalCredit, normalCredits, "ရိုးရိုးအကြွေး");
+
+                // ============================================
+                // ၂။ ဒိုင်ကျန်အကြွေး
+                // ============================================
+                List<MerchantCreditSummary> stockCredits =
+                    merchantCreditService.GetDepotStockCreditSummary(merchantId);
+
+                PopulateCreditGrid(dgvStockCredit, stockCredits, "ဒိုင်ကျန်အကြွေး");
+
+                // ============================================
+                // ၃။ အားလုံးပေါင်း
+                // ============================================
+                List<MerchantCreditSummary> allCredits =
+                    merchantCreditService.GetAllCreditSummary(merchantId);
+
+                PopulateCreditGrid(dgvAllCredit, allCredits, "အားလုံးပေါင်း");
+
+                // ============================================
+                // ၄။ Labels Update
+                // ============================================
+                UpdateCreditLabels(merchantId);
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show($"Error: {ex.Message}", "Error",
+                                      CustomMessageBox.MessageType.Error);
+            }
+        }
+        private void SetupCreditGrid(DataGridView dgv)
+        {
+            dgv.Rows.Clear();
+            dgv.Columns.Clear();
+
+            dgv.Columns.Add("colMerchant", "ကုန်သည်အမည်");
+            dgv.Columns.Add("colCustomer", "ဖောက်သည်အမည်");    // ✅ အသစ်
+            dgv.Columns.Add("colFish", "ငါးအမျိုးအစား");          // ✅ အသစ်
+            dgv.Columns.Add("colCreditType", "အကြွေးအမျိုးအစား");
+            dgv.Columns.Add("colRecords", "မှတ်တမ်း");
+            dgv.Columns.Add("colQuantity", "အရေအတွက်");
+            dgv.Columns.Add("colTotalAmount", "စုစုပေါင်းတန်ဖိုး");
+            dgv.Columns.Add("colPaid", "ဆပ်ပြီး");
+            dgv.Columns.Add("colRemaining", "ကျန်ငွေ");
+
+            dgv.Columns["colMerchant"].Width = 130;
+            dgv.Columns["colCustomer"].Width = 130;      // ✅
+            dgv.Columns["colFish"].Width = 120;          // ✅
+            dgv.Columns["colCreditType"].Width = 130;
+            dgv.Columns["colRecords"].Width = 80;
+            dgv.Columns["colQuantity"].Width = 100;
+            dgv.Columns["colTotalAmount"].Width = 130;
+            dgv.Columns["colPaid"].Width = 120;
+            dgv.Columns["colRemaining"].Width = 120;
+
+            dgv.RowTemplate.Height = 40;
+            dgv.DefaultCellStyle.Font = new Font("Pyidaungsu", 10, FontStyle.Regular);
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Pyidaungsu", 10, FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.MultiSelect = false;
+            dgv.ReadOnly = true;
+            dgv.RowHeadersVisible = false;
+            dgv.AllowUserToAddRows = false;
+        }
+        private void PopulateCreditGrid(DataGridView dgv,
+     List<MerchantCreditSummary> credits, string title)
+        {
+            dgv.Rows.Clear();
+
+            if (credits == null || credits.Count == 0)
+            {
+                dgv.Rows.Add("ဒေတာမရှိပါ", "", "", "", "", "", "", "", "");
+                return;
+            }
+
+            foreach (MerchantCreditSummary credit in credits)
+            {
+                // Row အရောင်
+                Color rowColor;
+                Color textColor = Color.Black;
+                Font rowFont = new Font("Pyidaungsu", 10, FontStyle.Regular);
+
+                switch (credit.CreditType)
+                {
+                    case "ရိုးရိုးအကြွေး":
+                        rowColor = Color.FromArgb(255, 245, 220); // ဝါဖျော့
+                        break;
+                    case "ဒိုင်ကျန်အကြွေး":
+                        rowColor = Color.FromArgb(220, 240, 255); // အပြာဖျော့
+                        break;
+                    case "အားလုံးပေါင်း":
+                        rowColor = Color.FromArgb(230, 255, 230); // စိမ်းဖျော့
+                        textColor = Color.DarkGreen;
+                        rowFont = new Font("Pyidaungsu", 10, FontStyle.Bold);
+                        break;
+                    default:
+                        rowColor = Color.White;
+                        break;
+                }
+
+                int rowIndex = dgv.Rows.Add(
+                    credit.MerchantName,
+                    credit.CustomerName,        // ✅ ဖောက်သည်နာမည်
+                    credit.FishName,            // ✅ ငါးအမည်
+                    credit.CreditType,
+                    credit.TotalRecords.ToString(),
+                    credit.TotalQuantity.ToString("N2"),
+                    credit.TotalAmount.ToString("#,##0.00"),
+                    credit.PaidAmount.ToString("#,##0.00"),
+                    credit.RemainingAmount.ToString("#,##0.00")
+                );
+
+                dgv.Rows[rowIndex].DefaultCellStyle.BackColor = rowColor;
+                dgv.Rows[rowIndex].DefaultCellStyle.ForeColor = textColor;
+                dgv.Rows[rowIndex].DefaultCellStyle.Font = rowFont;
+
+                // ကျန်ငွေ Cell ကို အနီရောင် Bold
+                if (credit.RemainingAmount > 0)
+                {
+                    DataGridViewCell cell = dgv.Rows[rowIndex].Cells["colRemaining"];
+                    cell.Style.ForeColor = Color.Red;
+                    cell.Style.Font = new Font("Pyidaungsu", 10, FontStyle.Bold);
+                }
+            }
+        }
+
+        private void UpdateCreditLabels(int merchantId)
+        {
+            // ရိုးရိုးအကြွေး
+            List<MerchantCreditSummary> normal =
+                merchantCreditService.GetNormalCreditSummary(merchantId);
+
+            if (normal.Count > 0)
+            {
+                decimal normalTotal = normal.Sum(c => c.TotalAmount);
+                decimal normalRemaining = normal.Sum(c => c.RemainingAmount);
+
+                lblNormalTotal.Text = $"ရိုးရိုးအကြွေး စုစုပေါင်း: {normalTotal:#,##0.00} ကျပ် | " +
+                                      $"ကျန်ငွေ: {normalRemaining:#,##0.00} ကျပ်";
+            }
+            else
+            {
+                lblNormalTotal.Text = "ရိုးရိုးအကြွေး: 0 ကျပ်";
+            }
+
+            // ဒိုင်ကျန်အကြွေး
+            List<MerchantCreditSummary> stock =
+                merchantCreditService.GetDepotStockCreditSummary(merchantId);
+
+            if (stock.Count > 0)
+            {
+                decimal stockTotal = stock.Sum(c => c.TotalAmount);
+                decimal stockRemaining = stock.Sum(c => c.RemainingAmount);
+
+                lblStockTotal.Text = $"ဒိုင်ကျန်အကြွေး စုစုပေါင်း: {stockTotal:#,##0.00} ကျပ် | " +
+                                     $"ကျန်ငွေ: {stockRemaining:#,##0.00} ကျပ်";
+            }
+            else
+            {
+                lblStockTotal.Text = "ဒိုင်ကျန်အကြွေး: 0 ကျပ်";
+            }
+
+            // အားလုံးပေါင်း
+            List<MerchantCreditSummary> all =
+                merchantCreditService.GetAllCreditSummary(merchantId);
+
+            if (all.Count > 0)
+            {
+                decimal allTotal = all.Sum(c => c.TotalAmount);
+                decimal allPaid = all.Sum(c => c.PaidAmount);
+                decimal allRemaining = all.Sum(c => c.RemainingAmount);
+
+                lblAllTotal.Text = $"အားလုံးပေါင်း: {allTotal:#,##0.00} ကျပ် | " +
+                                   $"ဆပ်ပြီး: {allPaid:#,##0.00} ကျပ် | " +
+                                   $"ကျန်ငွေ: {allRemaining:#,##0.00} ကျပ်";
+            }
+            else
+            {
+                lblAllTotal.Text = "အားလုံးပေါင်း: 0 ကျပ်";
+            }
+        }
+        #endregion
+
+        private void merchantCreditTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+
+       
     }
 }

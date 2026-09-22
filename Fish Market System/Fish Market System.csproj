@@ -121,6 +121,7 @@
     <Compile Include="model\FishCategory.cs" />
     <Compile Include="model\FishSpecies.cs" />
     <Compile Include="model\Merchant.cs" />
+    <Compile Include="model\MerchantCreditSummary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="repository\DepotPurchaseRepository.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="repository\FishSpeciesRepository.cs" />
     <Compile Include="repository\CustomerRepository.cs" />
     <Compile Include="repository\DepotRepository.cs" />
+    <Compile Include="repository\MerchantCreditRepository.cs" />
     <Compile Include="repository\MerchantDayReportRepository.cs" />
     <Compile Include="repository\MerchantRepository.cs" />
     <Compile Include="repository\SaleReportRepository.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="service\DepotSaleService.cs" />
     <Compile Include="service\DepotService.cs" />
     <Compile Include="service\FishSpeciesService.cs" />
+    <Compile Include="service\MerchantCreditService.cs" />
     <Compile Include="service\MerchantDayReportService.cs" />
     <Compile Include="service\MerchantService.cs" />
     <Compile Include="service\SaleReportService.cs" />

@@ -19,9 +19,9 @@ namespace Fish_Market_System.service
             return merchantRepository.AddMerchant(m);
         }
 
-        public List<Merchant> GetAll()
+        public List<Merchant> GetAll(string name = null)
         {
-            return merchantRepository.GetAll();
+            return merchantRepository.GetAll(name);
         }
 
         public List<MerchantSalesSummary> GetSalesByMerchantId(int merchantId,DateTime date)

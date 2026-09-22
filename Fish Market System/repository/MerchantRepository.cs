@@ -19,7 +19,7 @@ namespace Fish_Market_System.repository
         public bool AddMerchant(Merchant m)
         {
 
-            string query = @"INSERT INTO merchants  (merchantName) values (@name)  ";
+            string query = @"INSERT INTO merchants  (merchantName) values (@name);";
 
             MySqlParameter[] ps =
             {
@@ -30,24 +30,45 @@ namespace Fish_Market_System.repository
         }
 
 
-        public List<Merchant> GetAll()
+        public List<Merchant> GetAll(string merchantName = null)
         {
             List<Merchant> merchants = new List<Merchant>();
-            string query = "select merchantId,merchantname from merchants";
+            string query = @"select merchantId,merchantname from merchants";
 
-            DataTable dt = dbConn.GetData(query, null);
-            
-            foreach(DataRow row in dt.Rows)
+            List<MySqlParameter> paramlist = new List<MySqlParameter>();
+
+            if (!string.IsNullOrWhiteSpace(merchantName))
             {
-                Merchant m = new Merchant
-                {
-                    MerchantId = Convert.ToInt32(row["merchantId"]),
-                    MerchantName = row["merchantName"].ToString()
-                };
-                merchants.Add(m);
-
+                query += " WHERE merchantName Like @Name";
+                paramlist.Add(new MySqlParameter("@Name", $"%{merchantName.Trim()}%"));
+                
             }
-            return merchants;
+
+            query += " Order by MerchantName";
+
+            try
+            {
+                DataTable dt = dbConn.GetData(query, paramlist.ToArray());
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    Merchant m = new Merchant
+                    {
+                        MerchantId = Convert.ToInt32(row["merchantId"]),
+                        MerchantName = row["merchantName"].ToString()
+                    };
+                    merchants.Add(m);
+
+                }
+                return merchants;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetAll : {ex.Message}");
+                throw;
+            }
+
+           
         }
 
         public List<MerchantSalesSummary> GetSalesByMerchantIdAndDate(
@@ -112,5 +133,8 @@ namespace Fish_Market_System.repository
                 throw new Exception("ဒေတာရယူရာတွင် အမှားအယွင်းဖြစ်ပွားခဲ့သည်။", ex);
             }
         }
+
+
+       
     }
 }
