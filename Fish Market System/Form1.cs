@@ -1,10 +1,13 @@
-﻿using Fish_Market_System.dto;
-using Fish_Market_System.dto.dailyRepot;
-using Fish_Market_System.model;
-using Fish_Market_System.repository;
-using Fish_Market_System.service;
+﻿using Fish_Market_System.service;
+
 using Fish_Market_System.utilis;
 using Fish_Market_System.view;
+using Fish_Market_System.view.components;
+using FishStore.Core.dto.creditPay;
+using FishStore.Core.service.creditPay;
+using FishStore.dto;
+using FishStore.dto.dailyRepot;
+using FishStore.model;
 using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -27,6 +30,7 @@ namespace Fish_Market_System
         private readonly SaleReportService reportService = new SaleReportService();
         private readonly MerchantDayReportService merchantReportService = new MerchantDayReportService();
         private readonly MerchantCreditService merchantCreditService = new MerchantCreditService();
+        private readonly CreditSearchService creditSearchService = new CreditSearchService();
 
         // Lists
         private List<Merchant> merchants;
@@ -1277,6 +1281,145 @@ namespace Fish_Market_System
 
         }
 
-       
+        #region CreditPayment Section
+
+        private void LoadCreditSearchResults(string searchText)
+        {
+            try
+            {
+                
+                List<CreditSearchResult> results = creditSearchService.SearchCredits(searchText);
+
+                // FlowLayoutPanel ကိုရှင်းပါ
+                flCreditpay.Controls.Clear();
+                flCreditpay.SuspendLayout();
+
+                
+
+                if (results == null || results.Count == 0)
+                {
+                    Label lbl = new Label
+                    {
+                        Text = "🔍 ရှာဖွေမှုနှင့်ကိုက်ညီသော ဒေတာမတွေ့ပါ",
+                        Font = new Font("Pyidaungsu", 11, FontStyle.Regular),
+                        AutoSize = true,
+                        Margin = new Padding(10),
+                        ForeColor = Color.Gray
+                    };
+                    flCreditpay.Controls.Add(lbl);
+                    flCreditpay.ResumeLayout();
+                    return;
+                }
+
+                // Card တွေ ထည့်ပါ
+                foreach (CreditSearchResult result in results)
+                {
+                    CreditCard card = new CreditCard(result);
+                    card.Width = flCreditpay.ClientSize.Width - 25;
+
+                    card.PayCreditClicked += Card_PayCreditClicked;
+
+                    flCreditpay.Controls.Add(card);
+                }
+                flCreditpay.ResumeLayout();
+
+                UpdateSearchTotalLabel(results);
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show($"Error: {ex.Message}", "Error",
+                                      CustomMessageBox.MessageType.Error);
+            }
+        }
+
+        private void Card_PayCreditClicked(object sender, CreditSearchResult credit)
+        {
+            try
+            {
+                if (credit == null)
+                {
+                    CustomMessageBox.Show("အကြွေးအချက်အလက် မရှိပါ။", "Error",
+                                          CustomMessageBox.MessageType.Error);
+                    return;
+                }
+
+                // ✅ Credit Payment Form ဖွင့်
+                using (CreditPaymentForm paymentForm = new CreditPaymentForm(credit))
+                {
+                    DialogResult result = paymentForm.ShowDialog();
+
+                    // ✅ ဆပ်မှု အောင်မြင်ရင် Data ပြန် Load
+                    if (result == DialogResult.OK && paymentForm.IsSuccess)
+                    {
+                        string searchText = txtCreditSearch.Text.Trim();
+                        LoadCreditSearchResults(searchText);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show($"Error: {ex.Message}", "Error",
+                                      CustomMessageBox.MessageType.Error);
+            }
+        }
+
+        private void UpdateSearchTotalLabel(List<CreditSearchResult> results)
+        {
+            decimal totalNormal = results.Sum(r => r.NormalCreditAmount);
+            decimal totalStock = results.Sum(r => r.StockCreditAmount);
+            decimal grandTotal = results.Sum(r => r.TotalAmount);
+            decimal totalPaid = results.Sum(r => r.PaidAmount);
+            decimal totalRemaining = results.Sum(r => r.RemainingAmount);
+
+            lblSearchTotal.Text =
+                $"📊 စုစုပေါင်း - " +
+                $"ရိုးရိုး: {totalNormal:#,##0.00} ကျပ် | " +
+                $"ဒိုင်ကျန်: {totalStock:#,##0.00} ကျပ် | " +
+                $"စုစုပေါင်း: {grandTotal:#,##0.00} ကျပ် | " +
+                $"ဆပ်ပြီး: {totalPaid:#,##0.00} ကျပ် | " +
+                $"ကျန်ငွေ: {totalRemaining:#,##0.00} ကျပ်";
+
+        }
+
+        #endregion
+
+        private void txtCreditSearch_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string searchText = txtCreditSearch.Text.Trim();
+                LoadCreditSearchResults(searchText);
+            }
+            catch (Exception ex)
+            {
+
+                CustomMessageBox.Show($"Error: {ex.Message}", "Error",
+                                              CustomMessageBox.MessageType.Error);
+            }
+        }
+
+        private void flCreditpay_Resize(object sender, EventArgs e)
+        {
+            try
+            {
+                flCreditpay.SuspendLayout();
+
+                int newWidth = flCreditpay.ClientSize.Width - 25;
+
+                foreach (Control c in flCreditpay.Controls)
+                {
+                    if (c is CreditCard)  // ✅ CreditCard ပဲ ပြင်ပါ
+                    {
+                        c.Width = newWidth;
+                    }
+                }
+
+                flCreditpay.ResumeLayout();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in ResizeCreditCards: {ex.Message}");
+            }
+        }
     }
 }
